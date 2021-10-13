@@ -7,13 +7,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class loginActivity extends AppCompatActivity {
@@ -56,19 +50,15 @@ public class loginActivity extends AppCompatActivity {
                 progressBar2.setVisibility(view.GONE);
             } else if (!pt.isEmpty() && !ust.isEmpty()) {
 
-                cerateaccountdata.signInWithEmailAndPassword(ust, pt).addOnCompleteListener(loginActivity.this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-//                        progressBar2.setVisibility(view.VISIBLE);
+                cerateaccountdata.signInWithEmailAndPassword(ust, pt).addOnCompleteListener(loginActivity.this, task -> {
 
-                        if (!task.isSuccessful()) {
-                            Toast.makeText(loginActivity.this, "Failed", Toast.LENGTH_SHORT).show();
-                            progressBar2.setVisibility(view.GONE);
-                        } else {
-                            Intent twitpagegone2 = new Intent(loginActivity.this, twitpage.class);
-                            startActivity(twitpagegone2);
-                            progressBar2.setVisibility(view.GONE);
-                        }
+                    if (!task.isSuccessful()) {
+                        Toast.makeText(loginActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+                        progressBar2.setVisibility(view.GONE);
+                    } else {
+                        Intent twitpagegone2 = new Intent(loginActivity.this, twitpage.class);
+                        startActivity(twitpagegone2);
+                        progressBar2.setVisibility(view.GONE);
                     }
                 });
             }

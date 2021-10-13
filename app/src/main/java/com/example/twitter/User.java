@@ -1,15 +1,16 @@
 package com.example.twitter;
 
 public class User {
-    public String email , password;
+    public String email , password , usName;
 
     public User(){
 
     }
 
-    public User(String email , String password){
+    public User(String email , String password ,String Uername){
         this.email = email;
-        this.email = password;
+        this.password = password;
+        this.usName = Uername;
     }
 }
 

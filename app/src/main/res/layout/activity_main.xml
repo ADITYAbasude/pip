@@ -33,8 +33,8 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="171dp"
+        android:layout_height="15dp"
         android:layout_marginStart="32dp"
         android:layout_marginBottom="24dp"
         android:text="Have an account alredy? "
@@ -69,11 +69,14 @@
         android:backgroundTint="#FFFFFF"
         android:shadowColor="#FFFFFF"
         android:text="Log in"
-        android:textAllCaps="false"
+        android:textAllCaps="true"
         android:textColor="#2181F6"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/textView2"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.567" />
+        app:layout_constraintVertical_bias="0.176"
+        app:strokeColor="#FFFFFF"
+        app:strokeWidth="0dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

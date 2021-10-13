@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Twitter">
         <activity
+            android:name=".twitpage"
+            android:exported="true" />
+        <activity
             android:name=".AccountCreate"
             android:exported="true"
             android:parentActivityName=".account" />
