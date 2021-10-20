@@ -18,11 +18,15 @@
         <entry key="..\:/Twitter clone/app/src/main/res/layout/activity_login.xml" value="0.18229166666666666" />
         <entry key="..\:/Twitter clone/app/src/main/res/layout/activity_main.xml" value="0.18" />
         <entry key="..\:/Twitter clone/app/src/main/res/layout/activity_twitpage.xml" value="0.18229166666666666" />
+        <entry key="..\:/Twitter clone/app/src/main/res/layout/activity_twittingpage_user.xml" value="0.2" />
         <entry key="..\:/Twitter clone/app/src/main/res/layout/fragment_dashboard.xml" value="0.18229166666666666" />
         <entry key="..\:/Twitter clone/app/src/main/res/layout/fragment_home.xml" value="0.22" />
         <entry key="..\:/Twitter clone/app/src/main/res/layout/fragment_notifications.xml" value="0.18229166666666666" />
         <entry key="..\:/Twitter clone/app/src/main/res/layout/fragment_profile.xml" value="0.19166666666666668" />
         <entry key="..\:/Twitter clone/app/src/main/res/layout/fragment_search.xml" value="0.2" />
+        <entry key="..\:/Twitter clone/app/src/main/res/layout/imageselectforpiptime.xml" value="1.0" />
+        <entry key="..\:/Twitter clone/app/src/main/res/layout/imageselectoronpip.xml" value="0.1816123188405797" />
+        <entry key="..\:/Twitter clone/app/src/main/res/layout/listview.xml" value="0.19021739130434784" />
         <entry key="..\:/Twitter clone/app/src/main/res/layout/twitpage.xml" value="0.18" />
         <entry key="..\:/Twitter clone/app/src/main/res/menu/bottom_nav_menu.xml" value="0.18229166666666666" />
         <entry key="..\:/Twitter clone/app/src/main/res/menu/menu.xml" value="0.19166666666666668" />

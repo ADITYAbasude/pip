@@ -1,4 +1,4 @@
-package com.example.twitter;
+package com.example.pip;
 
 import org.junit.Test;
 

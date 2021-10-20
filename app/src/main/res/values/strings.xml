@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Twitter</string>
+    <string name="app_name">Pip</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -11,10 +11,9 @@
     <string name="login_failed">"Login failed"</string>
     <string name="title_activity_twitpage">twitpage</string>
     <string name="title_home">Home</string>
-<!--    <string name="title_dashboard">Dashboard</string>-->
-<!--    <string name="title_notifications">Notifications</string>-->
     <string name="title_search">Search</string>
     <string name="title_profile">Profile</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="todo">TODO</string>
 </resources>

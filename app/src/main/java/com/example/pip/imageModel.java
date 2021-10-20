@@ -1,4 +1,4 @@
-package com.example.twitter;
+package com.example.pip;
 
 public class imageModel {
     public String imagemodeluri;

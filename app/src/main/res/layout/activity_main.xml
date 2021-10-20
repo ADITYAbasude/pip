@@ -15,7 +15,7 @@
         app:layout_constraintHorizontal_bias="0.118"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/twitter" />
+        app:srcCompat="@drawable/pip" />
 
     <TextView
         android:id="@+id/textView"
@@ -62,21 +62,18 @@
         android:id="@+id/loginbtn"
         android:layout_width="85dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="270dp"
-        android:layout_marginEnd="115dp"
         android:layout_marginBottom="32dp"
         android:backgroundTint="#FFFFFF"
         android:shadowColor="#FFFFFF"
         android:text="Log in"
         android:textAllCaps="true"
-        android:textColor="#2181F6"
+        android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.016"
         app:layout_constraintStart_toEndOf="@+id/textView2"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.176"
+        app:layout_constraintVertical_bias="0.944"
         app:strokeColor="#FFFFFF"
         app:strokeWidth="0dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
