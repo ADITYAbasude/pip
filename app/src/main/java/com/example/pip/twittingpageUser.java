@@ -62,17 +62,17 @@ public class twittingpageUser extends AppCompatActivity {
 
     void getTextAndUploadToDatavbse() {
         submmitPip.setOnClickListener(view -> {
-            storepip pipmodel = new storepip(pipstoreData);
-            FirebaseDatabase.getInstance().getReference("twitter-clone-332f5-default-rtdb/pipmodel").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                    .setValue(pipmodel).addOnCompleteListener(task -> {
-//                        if (task.isSuccessful()){
-//                            Toast.makeText(this, "Successfully", Toast.LENGTH_SHORT).show();
-//                        }
-//                        else{
-//                            Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
-//                        }
+            String getPipData = takingPipFromUser.getText().toString();
+            User user = new User(getPipData);
+            FirebaseDatabase.getInstance().getReference("user").child("PipPostData")
+                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).push()
+                    .setValue(user).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    Toast.makeText(this, "Successfully", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
+                }
             });
-            Toast.makeText(this, "Error 2", Toast.LENGTH_SHORT).show();
         });
     }
 

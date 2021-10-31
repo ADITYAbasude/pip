@@ -1,7 +1,7 @@
 package com.example.pip;
 
 public class User {
-    public String email , password , usName;
+    public String email , password , usName , pipPostData;
 
     public User(){
 
@@ -11,6 +11,10 @@ public class User {
         this.email = email;
         this.password = password;
         this.usName = Uername;
+    }
+
+    public User (String pipPostData){
+        this.pipPostData = pipPostData;
     }
 }
 
