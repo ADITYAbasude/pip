@@ -23,7 +23,6 @@ import java.util.ArrayList;
 
 public class twittingpageUser extends AppCompatActivity {
     EditText takingPipFromUser;
-    TextView closebtn;
     Button submmitPip;
     String pipstoreData;
 
@@ -35,15 +34,12 @@ public class twittingpageUser extends AppCompatActivity {
 
 //        ---------id declaration-------------
         takingPipFromUser = findViewById(R.id.takingPipFromUser);
-        closebtn = findViewById(R.id.closeBtn);
         submmitPip = findViewById(R.id.pipPost);
 
 
         ActionBar ABsupport = getSupportActionBar();
         ABsupport.hide();
 
-//        ---------move to back page option--------------
-        moveToBackPage();
 
 //        ----------------getText Of pip and upload on the Database-----------
         pipstoreData = takingPipFromUser.toString();
@@ -53,12 +49,7 @@ public class twittingpageUser extends AppCompatActivity {
     }
 
 
-    void moveToBackPage() {
-        closebtn.setOnClickListener(view -> {
-            Intent moveback = new Intent(twittingpageUser.this, twitpage.class);
-            startActivity(moveback);
-        });
-    }
+
 
     void getTextAndUploadToDatavbse() {
         submmitPip.setOnClickListener(view -> {

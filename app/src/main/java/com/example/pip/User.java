@@ -16,6 +16,10 @@ public class User {
     public User (String pipPostData){
         this.pipPostData = pipPostData;
     }
+
+    public String getUsName() {
+        return usName;
+    }
 }
 
 

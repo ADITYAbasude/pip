@@ -6,22 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".twittingpageUser">
 
-    <TextView
-        android:id="@+id/closeBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="20dp"
-        android:drawableStart="@drawable/ic_baseline_close_24"
-        android:textColor="#000000"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/takingPipFromUser"
-        app:layout_constraintEnd_toStartOf="@+id/pipPost"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.962" />
-
     <Button
         android:id="@+id/pipPost"
         android:layout_width="wrap_content"
