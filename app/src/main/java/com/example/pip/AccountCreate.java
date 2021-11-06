@@ -67,7 +67,7 @@ public class AccountCreate extends AppCompatActivity {
                                 progressBar.setVisibility(View.VISIBLE);
                                 if (task.isSuccessful()) {
                                     User user = new User(ususerlenght, passwordlenght, NameofUser);
-                                    FirebaseDatabase.getInstance().getReference("user")
+                                    FirebaseDatabase.getInstance().getReference("user").child("UserInfo")
                                             .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                             .setValue(user).addOnCompleteListener(task1 -> {
 

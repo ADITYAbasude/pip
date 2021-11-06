@@ -31,12 +31,15 @@
         <entry key="..\:/Twitter clone/app/src/main/res/menu/bottom_nav_menu.xml" value="0.18229166666666666" />
         <entry key="..\:/Twitter clone/app/src/main/res/menu/menu.xml" value="0.19166666666666668" />
         <entry key="..\:/Twitter clone/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1984375" />
+        <entry key="..\:/pip/app/src/main/res/layout/activity_comment.xml" value="0.1" />
         <entry key="..\:/pip/app/src/main/res/layout/activity_twitpage.xml" value="0.15081521739130435" />
         <entry key="..\:/pip/app/src/main/res/layout/activity_twittingpage_user.xml" value="0.15081521739130435" />
         <entry key="..\:/pip/app/src/main/res/layout/fragment_home.xml" value="0.15081521739130435" />
         <entry key="..\:/pip/app/src/main/res/layout/fragment_profile.xml" value="0.15081521739130435" />
         <entry key="..\:/pip/app/src/main/res/layout/fragment_search.xml" value="0.15081521739130435" />
+        <entry key="..\:/pip/app/src/main/res/layout/homepagetoseepip.xml" value="0.22" />
         <entry key="..\:/pip/app/src/main/res/layout/pipusername.xml" value="0.25" />
+        <entry key="..\:/pip/app/src/main/res/layout/usercomment.xml" value="0.1716485507246377" />
       </map>
     </option>
   </component>

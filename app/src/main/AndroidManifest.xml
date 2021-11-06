@@ -13,6 +13,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Twitter">
         <activity
+            android:name=".userComment"
+            android:exported="false"
+            android:parentActivityName=".twitpage"
+            />
+
+        <activity
             android:name=".twittingpageUser"
             android:exported="false" />
         <activity

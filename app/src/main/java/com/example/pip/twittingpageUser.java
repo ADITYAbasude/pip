@@ -1,30 +1,25 @@
 package com.example.pip;
 
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.ArrayList;
+import com.google.firebase.database.ValueEventListener;
 
 public class twittingpageUser extends AppCompatActivity {
-    EditText takingPipFromUser;
-    Button submmitPip;
-    String pipstoreData;
+    private EditText takingPipFromUser;
+    private Button submmitPip;
+    private String pipStoreData, storeUserName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,29 +37,51 @@ public class twittingpageUser extends AppCompatActivity {
 
 
 //        ----------------getText Of pip and upload on the Database-----------
-        pipstoreData = takingPipFromUser.toString();
+        pipStoreData = takingPipFromUser.toString();
+        getUserNameFromDatabase();
         getTextAndUploadToDatavbse();
 
 
     }
 
 
-
-
-    void getTextAndUploadToDatavbse() {
+    private void getTextAndUploadToDatavbse() {
         submmitPip.setOnClickListener(view -> {
-            String getPipData = takingPipFromUser.getText().toString();
-            User user = new User(getPipData);
-            FirebaseDatabase.getInstance().getReference("user").child("PipPostData")
-                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).push()
+            DatabaseReference puskKey = FirebaseDatabase.getInstance().getReference("user").push();
+            String getPipData = takingPipFromUser.getText().toString().trim();
+            User user = new User(getPipData, storeUserName, "0", "0");
+            FirebaseDatabase.getInstance().getReference("user").child("All-User-Pip-Data")
+                    .child(puskKey.getKey())
                     .setValue(user).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
-                    Toast.makeText(this, "Successfully", Toast.LENGTH_SHORT).show();
+                    takingPipFromUser.setText("");
                 } else {
                     Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
                 }
             });
+
+            User user1 = new User(getPipData, storeUserName, "0", "0");
+            FirebaseDatabase.getInstance().getReference("user").child("UserPost").child("UserPipData")
+                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                    .child(puskKey.getKey()).setValue(user1);
         });
+    }
+
+
+    private void getUserNameFromDatabase() {
+        FirebaseDatabase.getInstance().getReference("user").child("UserInfo")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        User user2 = snapshot.getValue(User.class);
+                        storeUserName = user2.usName;
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                    }
+                });
     }
 
 }

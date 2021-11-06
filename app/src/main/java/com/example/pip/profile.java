@@ -142,7 +142,7 @@ public class profile extends Fragment {
             startActivity(inte);
         });
     }
-//------------------imgae upload on the database--------------
+//------------------image upload on the database--------------
     void uploadImage(Uri imageuri) {
         StorageReference fileref = refrence.child(System.currentTimeMillis() + "." + getFileExtansion(imageuri));
         fileref.putFile(imageuri).addOnSuccessListener(taskSnapshot -> fileref.getDownloadUrl().addOnSuccessListener(uri -> {

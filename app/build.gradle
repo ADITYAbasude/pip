@@ -52,6 +52,7 @@ dependencies {
     implementation 'com.karumi:dexter:6.2.3'
     implementation 'com.google.firebase:firebase-analytics'
     implementation platform('com.google.firebase:firebase-bom:28.4.2')
+    implementation('com.firebaseui:firebase-ui-database:6.2.0')
 }
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
