@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -30,7 +29,6 @@ public class home extends Fragment {
     private RecyclerView pipShow;
     private static ArrayList<User> storePipData = new ArrayList<>();
     private ProgressBar progessbar;
-    private static int likecount;
 
 
     public home() {
@@ -104,3 +102,5 @@ public class home extends Fragment {
 
 
 }
+
+

@@ -25,7 +25,7 @@ public class loginActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_login);
         cerateaccountdata = FirebaseAuth.getInstance();
-        logbtn = findViewById(R.id.loginbtn);
+        logbtn = findViewById(R.id.loginBtn);
         googlelogin = findViewById(R.id.googlelogin);
         facebooklogin = findViewById(R.id.facbookLogin);
         useridtaken = findViewById(R.id.userNameAndId);

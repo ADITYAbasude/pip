@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:layout_marginTop="20dp"
-        android:textColor="#000000"
+        android:textColor="@color/black"
         android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/userProfileImg"
@@ -36,7 +36,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginBottom="8dp"
         android:paddingRight="10dp"
-        android:textColor="#000000"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -75,7 +75,7 @@
                 android:layout_height="20dp"
                 android:layout_weight="1"
                 android:text="@string/_01"
-                android:textColor="#000000"
+                android:textColor="@color/black"
                 android:textSize="14sp" />
         </LinearLayout>
 
@@ -100,7 +100,7 @@
                 android:layout_height="20dp"
                 android:layout_weight="1"
                 android:text="@string/_02"
-                android:textColor="#000000"
+                android:textColor="@color/black"
                 android:textSize="14sp" />
         </LinearLayout>
 

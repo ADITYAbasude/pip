@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/userPhotoInCommentPage"
+        android:id="@+id/imageView3"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
@@ -16,28 +16,26 @@
         app:srcCompat="@drawable/ic_baseline_account_circle_24" />
 
     <TextView
-        android:id="@+id/UserNameInCommentPage"
+        android:id="@+id/setUserNameInUserReplySection"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:textColor="#000000"
-        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/userPhotoInCommentPage"
+        app:layout_constraintStart_toEndOf="@+id/imageView3"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/PipInCommentPage"
+        android:id="@+id/setUserPipDataInUserReplySection"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="10dp"
-        android:maxHeight="100dp"
-        android:paddingRight="10dp"
-        android:textSize="14sp"
+        android:layout_marginEnd="16dp"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/userPhotoInCommentPage"
-        app:layout_constraintTop_toBottomOf="@+id/UserNameInCommentPage" />
-
+        app:layout_constraintStart_toEndOf="@+id/imageView3"
+        app:layout_constraintTop_toBottomOf="@+id/setUserNameInUserReplySection" />
 </androidx.constraintlayout.widget.ConstraintLayout>

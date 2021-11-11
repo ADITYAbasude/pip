@@ -6,6 +6,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.karumi.dexter.Dexter;
@@ -17,13 +18,14 @@ import com.karumi.dexter.listener.single.PermissionListener;
 
 
 public class account extends AppCompatActivity {
-    private Button loginbtn , createAccount;
+    private Button  createAccount;
+    private TextView loginbtn;
     FirebaseAuth auth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        loginbtn = findViewById(R.id.loginbtn);
+        loginbtn = findViewById(R.id.loginBtn);
         createAccount = findViewById(R.id.createAccount);
         auth = FirebaseAuth.getInstance();
 

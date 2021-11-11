@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:textColor="#000000"
+        android:textColor="@color/black"
         android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/userPhotoInCommentPage"
@@ -30,11 +30,14 @@
 
     <ScrollView
         android:id="@+id/scrollView2"
+        style="@android:style/Widget.ScrollView"
         android:layout_width="0dp"
-        android:layout_height="120dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
-        android:scrollbarSize="2dp"
+        android:layout_marginBottom="16dp"
+        android:scrollbarSize="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/showComment"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/userPhotoInCommentPage"
         app:layout_constraintTop_toBottomOf="@+id/setUserNameInCommentSection">
@@ -53,7 +56,7 @@
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
                 android:scrollbars="vertical"
-                android:textColor="#000000"
+                android:textColor="@color/black"
                 android:textSize="14sp"
                 tools:ignore="SpeakableTextPresentCheck" />
         </LinearLayout>
@@ -63,13 +66,14 @@
         android:id="@+id/showComment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/editTextTextMultiLine"
+        android:paddingLeft="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/writeComment"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
 
     <EditText
-        android:id="@+id/editTextTextMultiLine"
+        android:id="@+id/writeComment"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -78,6 +82,7 @@
         android:gravity="start|top"
         android:inputType="textMultiLine"
         android:maxHeight="100dp"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/sendBtn"
         app:layout_constraintStart_toStartOf="parent"
@@ -92,5 +97,16 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/send" />
+
+    <ProgressBar
+        android:id="@+id/progressBarInRecyclerView"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

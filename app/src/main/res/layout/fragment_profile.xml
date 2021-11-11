@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="44dp"
-            android:textColor="#000000"
+            android:textColor="@color/black"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -55,7 +55,7 @@
             android:layout_marginStart="68dp"
             android:layout_marginTop="40dp"
             android:text="Following"
-            android:textColor="#000000"
+            android:textColor="@color/black"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/profileimg" />
@@ -67,7 +67,7 @@
             android:layout_marginStart="35dp"
             android:layout_marginTop="40dp"
             android:text="Followers"
-            android:textColor="#000000"
+            android:textColor="@color/black"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.286"
@@ -90,7 +90,7 @@
                 android:layout_marginTop="50dp"
                 android:paddingLeft="40dp"
                 android:text="Profile"
-                android:textColor="#000000"
+                android:textColor="@color/black"
                 android:textSize="21sp"
                 android:textStyle="bold" />
 
@@ -101,7 +101,7 @@
                 android:layout_marginTop="30dp"
                 android:paddingLeft="40dp"
                 android:text="Settings and Privercy"
-                android:textColor="#000000"
+                android:textColor="@color/black"
                 android:textSize="21dp"
                 android:textStyle="bold" />
 
@@ -112,7 +112,7 @@
                 android:layout_marginTop="30dp"
                 android:paddingLeft="40dp"
                 android:text="Log Out"
-                android:textColor="#000000"
+                android:textColor="@color/black"
                 android:textSize="21sp"
                 android:textStyle="bold" />
         </LinearLayout>

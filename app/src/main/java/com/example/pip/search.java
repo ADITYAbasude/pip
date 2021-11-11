@@ -58,7 +58,6 @@ public class search extends Fragment {
         userNotFound = view.findViewById(R.id.userNotFound);
 
 
-
         gup = new gitUserPip(getContext(), R.layout.pipusername, StoreUserName);
         storePipUerName.setAdapter(gup);
 
@@ -85,31 +84,30 @@ public class search extends Fragment {
                 progressBar.setVisibility(View.VISIBLE);
                 ref.child("user").child("UserInfo").orderByChild("usName").startAt(searchView.getText().toString()).endAt("\uf8ff")
                         .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.exists()) {
-                            StoreUserName.clear();
-                            for (DataSnapshot ds : snapshot.getChildren()) {
-                                User user = ds.getValue(User.class);
-                                StoreUserName.add(user);
-                                progressBar.setVisibility(View.GONE);
-                                userNotFound.setVisibility(View.GONE);
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                if (snapshot.exists()) {
+                                    StoreUserName.clear();
+                                    for (DataSnapshot ds : snapshot.getChildren()) {
+                                        User user = ds.getValue(User.class);
+                                        StoreUserName.add(user);
+                                        progressBar.setVisibility(View.GONE);
+                                        userNotFound.setVisibility(View.GONE);
+                                    }
+                                    gup.notifyDataSetChanged();
+                                } else {
+                                    userNotFound.setVisibility(View.VISIBLE);
+                                    progressBar.setVisibility(View.GONE);
+                                }
+
                             }
-                            gup.notifyDataSetChanged();
-                        }
-                        else{
-                            userNotFound.setVisibility(View.VISIBLE);
-                            progressBar.setVisibility(View.GONE);
-                        }
-
-                    }
 
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        Toast.makeText(getContext(), "User not found", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                Toast.makeText(getContext(), "User not found", Toast.LENGTH_SHORT).show();
+                            }
+                        });
             }
 
             @Override
@@ -117,17 +115,6 @@ public class search extends Fragment {
 
             }
         });
-
-
-
-
-
-
-
-
-
-
-
 
 
     }

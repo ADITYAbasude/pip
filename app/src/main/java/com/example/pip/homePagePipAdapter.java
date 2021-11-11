@@ -50,10 +50,12 @@ public class homePagePipAdapter extends RecyclerView.Adapter<homePagePipAdapter.
         holder.pipDateShow.setText(user.pipPostData);
         holder.heartCount.setText(user.like);
 
-        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
 
-            try {
-                heart.setOnClickListener(view -> {
+//        countTheComments(holder.CommentCount, user);
+
+        try {
+            heart.setOnClickListener(view -> {
+                if (FirebaseAuth.getInstance().getCurrentUser() != null) {
                     holder.likeCount = user.like;
                     holder.parseInIntegerLikeCount = Integer.parseInt(holder.likeCount);
                     countLike = holder.parseInIntegerLikeCount;
@@ -75,25 +77,65 @@ public class homePagePipAdapter extends RecyclerView.Adapter<homePagePipAdapter.
                         holder.checkLikeOrNot = false;
                     }
 
-                });
-            } catch (Exception e) {
-                Toast.makeText(context, "Please try again", Toast.LENGTH_SHORT).show();
-            }
-        } else {
-            Toast.makeText(context, "Please login", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(context, "Please login", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        } catch (Exception e) {
+            Toast.makeText(context, "Please try again", Toast.LENGTH_SHORT).show();
         }
 
-        holder.comment.setOnClickListener(view->{
-            Intent moveCommentPage = new Intent(context , userComment.class);
-            moveCommentPage.putExtra("userName" , holder.userPipName.getText().toString());
-            moveCommentPage.putExtra("pipData" , holder.pipDateShow.getText().toString());
+
+        holder.comment.setOnClickListener(view -> {
+            Intent moveCommentPage = new Intent(context, userComment.class);
+            moveCommentPage.putExtra("userName", holder.userPipName.getText().toString());
+            moveCommentPage.putExtra("pipData", holder.pipDateShow.getText().toString());
             context.startActivity(moveCommentPage);
 
         });
-//        ifUserClickOnComment(holder.comment);
+
+        holder.share.setOnClickListener(view -> {
+            Intent share = new Intent();
+            share.setAction(Intent.ACTION_SEND);
+            share.putExtra(Intent.EXTRA_TEXT, holder.pipDateShow.getText().toString());
+            share.setType("text/plain");
+            Intent shareIntent = Intent.createChooser(share, "Pip Post");
+            context.startActivity(shareIntent);
+        });
+
 
     }
 
+    private void countTheComments(TextView commentCount, User user) {
+
+        FirebaseDatabase.getInstance().getReference("user").child("All-User-Pip-Data").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    ds.getRef().child("comment").orderByChild("pipPostData").equalTo(user.pipPostData).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot2) {
+                            int countcomment = (int) snapshot2.getChildrenCount();
+                            commentCount.setText(countcomment + "");
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+//        commentCount.setText("88");
+    }
 
     private void likeMinesMines(User user) {
         FirebaseDatabase.getInstance().getReference("user").child("All-User-Pip-Data").orderByChild("pipPostData")
@@ -138,11 +180,6 @@ public class homePagePipAdapter extends RecyclerView.Adapter<homePagePipAdapter.
     }
 
 
-    private void ifUserClickOnComment(ImageView comment){
-
-    }
-
-
     @Override
     public int getItemCount() {
         return pipDate.size();
@@ -151,7 +188,7 @@ public class homePagePipAdapter extends RecyclerView.Adapter<homePagePipAdapter.
     public static class MyViewAdapter extends RecyclerView.ViewHolder {
 
         TextView userPipName, pipDateShow, heartCount, CommentCount;
-        ImageView heart  , comment;
+        ImageView heart, comment, share;
         String likeCount;
         int parseInIntegerLikeCount;
         boolean checkLikeOrNot = true;
@@ -165,6 +202,7 @@ public class homePagePipAdapter extends RecyclerView.Adapter<homePagePipAdapter.
             comment = itemView.findViewById(R.id.comment);
             heartCount = itemView.findViewById(R.id.heartCount);
             CommentCount = itemView.findViewById(R.id.commentCount);
+            share = itemView.findViewById(R.id.share);
 
 
         }

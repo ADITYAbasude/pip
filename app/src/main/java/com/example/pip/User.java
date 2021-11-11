@@ -1,7 +1,7 @@
 package com.example.pip;
 
 public class User {
-    public String email, password, usName, pipPostData , pipuserName  ,  like , date ,comments;
+    public String email, password, usName, pipPostData , pipuserName  ,  like , date ,usercomments , commentPostUserName;
 
     public User() {
 
@@ -20,8 +20,9 @@ public class User {
         this.date = date;
 
     }
-    public User(String comments){
-        this.comments = comments;
+    public User(String comments   , String commentPostUserName){
+        this.usercomments = comments;
+        this.commentPostUserName = commentPostUserName;
     }
 
     public String getUsName() {

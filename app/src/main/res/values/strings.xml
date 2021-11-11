@@ -22,4 +22,6 @@
     <string name="todo1">TODO</string>
     <string name="todo2">TODO</string>
     <string name="todo3">TODO</string>
+    <string name="create_account">Create account</string>
+    <string name="login">LogIn</string>
 </resources>

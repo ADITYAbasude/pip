@@ -158,4 +158,8 @@ public class profile extends Fragment {
         return mtm.getExtensionFromMimeType(cr.getType(imuri));
 
     }
+
+    String returnName(){
+        return UserName.getText().toString();
+    }
 }
