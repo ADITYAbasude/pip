@@ -9,11 +9,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,9 +17,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,26 +34,17 @@ import com.google.firebase.storage.StorageReference;
 public class profile extends Fragment {
 
 
-    TextView UserName, logout;
-    FirebaseUser user;
-    DatabaseReference ref;
+    private TextView UserName, logout , editProfile;
+    private DatabaseReference ref;
     private DatabaseReference root = FirebaseDatabase.getInstance().getReference().child("Image");
     private StorageReference refrence = FirebaseStorage.getInstance().getReference();
     private static final int GALLAY_REQUEST_CODE = 123;
-    ImageView profileimg;
-    String userid;
+    private ImageView profileimg;
     Uri ImageData;
 
     public profile() {
     }
 
-    public static profile newInstance() {
-        profile fragment = new profile();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -79,6 +67,7 @@ public class profile extends Fragment {
         UserName = view.findViewById(R.id.UserName);
         profileimg = view.findViewById(R.id.profileimg);
         logout = view.findViewById(R.id.logout);
+        editProfile = view.findViewById(R.id.editProfile);
 
 
 //        name taking from database
@@ -124,6 +113,10 @@ public class profile extends Fragment {
         logoutfuc();
 
 
+//        ----------------editProfile---------------------
+        editProfileClick();
+
+
     }
 
     @Override
@@ -159,7 +152,11 @@ public class profile extends Fragment {
 
     }
 
-    String returnName(){
-        return UserName.getText().toString();
+
+    private void editProfileClick(){
+        editProfile.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext() , EditUserProfileActivity.class);
+            startActivity(intent);
+        });
     }
 }
