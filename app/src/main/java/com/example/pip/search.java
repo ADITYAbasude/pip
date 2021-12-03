@@ -1,21 +1,22 @@
 package com.example.pip;
 
+import android.annotation.SuppressLint;
+import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,14 +28,15 @@ import java.util.ArrayList;
 
 public class search extends Fragment {
     private EditText searchView;
-    private ListView storePipUerName;
-    private ArrayList<User> StoreUserName = new ArrayList<>();
-    private static final DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-    private gitUserPip gup;
+    private RecyclerView storePipUerName;
+    private final DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+    private follow_page gup;
     private ProgressBar progressBar;
     private boolean followOrNot;
     private TextView userNotFound;
-
+    private ArrayList<User> Store_User_Info = new ArrayList<>();
+    private ArrayList<User> Store_User_Img = new ArrayList<>();
+    Uri img_uri;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,18 +55,18 @@ public class search extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 //        -------------------id declaration--------------------------
         searchView = view.findViewById(R.id.serachView);
-        storePipUerName = view.findViewById(R.id.searchresult);
+        storePipUerName = view.findViewById(R.id.serachresult);
         progressBar = view.findViewById(R.id.progressBar);
         userNotFound = view.findViewById(R.id.userNotFound);
 
 
-        gup = new gitUserPip(getContext(), R.layout.pipusername, StoreUserName);
+        gup = new follow_page(getContext(), Store_User_Info, Store_User_Img);
+        storePipUerName.setLayoutManager(new LinearLayoutManager(getContext()));
+
         storePipUerName.setAdapter(gup);
 
 //        ----------------datasnapshot from firebase---------------
         takeUserNameFromFirebase();
-
-        storePipUerName.setOnItemClickListener((adapterView, view1, i, l) -> Toast.makeText(getContext(), "Item : " + i, Toast.LENGTH_SHORT).show());
 
 
     }
@@ -84,18 +86,21 @@ public class search extends Fragment {
                 progressBar.setVisibility(View.VISIBLE);
                 ref.child("user").child("UserInfo").orderByChild("usName").startAt(searchView.getText().toString()).endAt("\uf8ff")
                         .addValueEventListener(new ValueEventListener() {
+                            @SuppressLint("NotifyDataSetChanged")
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 if (snapshot.exists()) {
-                                    StoreUserName.clear();
+                                    Store_User_Info.clear();
+                                    Store_User_Img.clear();
                                     for (DataSnapshot ds : snapshot.getChildren()) {
                                         User user = ds.getValue(User.class);
-                                        StoreUserName.add(user);
+                                        Store_User_Info.add(user);
                                         progressBar.setVisibility(View.GONE);
                                         userNotFound.setVisibility(View.GONE);
                                     }
                                     gup.notifyDataSetChanged();
                                 } else {
+                                    userNotFound.setVisibility(View.VISIBLE);
                                     userNotFound.setVisibility(View.VISIBLE);
                                     progressBar.setVisibility(View.GONE);
                                 }
@@ -105,7 +110,6 @@ public class search extends Fragment {
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
-                                Toast.makeText(getContext(), "User not found", Toast.LENGTH_SHORT).show();
                             }
                         });
             }

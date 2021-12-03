@@ -24,4 +24,10 @@
     <string name="todo3">TODO</string>
     <string name="create_account">Create account</string>
     <string name="login">LogIn</string>
+    <string name="save">Save</string>
+    <string name="website">Website</string>
+    <string name="birth_date">Birth date</string>
+    <string name="location">Location</string>
+    <string name="bio">Bio</string>
+    <string name="username">UserName</string>
 </resources>

@@ -51,7 +51,7 @@ public class homePagePipAdapter extends RecyclerView.Adapter<homePagePipAdapter.
         holder.heartCount.setText(user.like);
 
 
-//        countTheComments(holder.CommentCount, user);
+        countTheComments(holder.CommentCount, user);
 
         try {
             heart.setOnClickListener(view -> {

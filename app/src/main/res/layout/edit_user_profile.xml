@@ -13,6 +13,7 @@
         android:layout_marginTop="32dp"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="250dp"
+        app:layout_constraintCircleRadius="250dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -24,6 +25,7 @@
             app:cardCornerRadius="250dp">
 
             <ImageView
+                android:id="@+id/setImageOfUser"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:scaleType="centerCrop"
@@ -41,7 +43,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
-        android:hint="UserName"
+        android:hint="@string/username"
         app:boxCornerRadiusBottomEnd="10dp"
         app:boxCornerRadiusBottomStart="10dp"
         app:boxCornerRadiusTopEnd="10dp"
@@ -57,7 +59,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLength="20"
-            android:minHeight="48dp" />
+            android:minHeight="48dp"
+            android:textColor="@color/black"
+            tools:ignore="TextContrastCheck" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -69,7 +73,7 @@
 
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
-        android:hint="Bio"
+        android:hint="@string/bio"
         app:boxCornerRadiusBottomEnd="10dp"
         app:boxCornerRadiusBottomStart="10dp"
         app:boxCornerRadiusTopEnd="10dp"
@@ -83,7 +87,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
-            android:maxLength="100" />
+            android:maxLength="100"
+            android:textColor="@color/black" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -94,7 +99,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
-        android:hint="Location"
+        android:hint="@string/location"
         app:boxCornerRadiusBottomEnd="10dp"
         app:boxCornerRadiusBottomStart="10dp"
         app:boxCornerRadiusTopEnd="10dp"
@@ -107,7 +112,9 @@
             android:id="@+id/UserLocation"
             android:layout_width="match_parent"
 
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            tools:ignore="TextContrastCheck" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -118,7 +125,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
-        android:hint="Website"
+        android:hint="@string/website"
         app:boxCornerRadiusBottomEnd="10dp"
         app:boxCornerRadiusBottomStart="10dp"
         app:boxCornerRadiusTopEnd="10dp"
@@ -131,7 +138,8 @@
             android:id="@+id/UserWebsite"
             android:layout_width="match_parent"
 
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="@color/black" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -143,7 +151,7 @@
         android:layout_marginTop="32dp"
 
         android:layout_marginEnd="32dp"
-        android:hint="Birth date"
+        android:hint="@string/birth_date"
         app:boxCornerRadiusBottomEnd="10dp"
         app:boxCornerRadiusBottomStart="10dp"
         app:boxCornerRadiusTopEnd="10dp"
@@ -157,7 +165,8 @@
             android:layout_width="match_parent"
 
             android:layout_height="wrap_content"
-            android:drawableEnd="@drawable/ic_baseline_calendar_today_24" />
+            android:drawableEnd="@drawable/ic_baseline_calendar_today_24"
+            android:textColor="@color/black" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -167,10 +176,22 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="70dp"
         android:layout_marginEnd="32dp"
-        android:text="Save"
+        android:text="@string/save"
+        android:textColor="@color/black"
         app:layout_constraintCircleRadius="100dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout6" />
+
+    <ProgressBar
+        android:id="@+id/editText_progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
