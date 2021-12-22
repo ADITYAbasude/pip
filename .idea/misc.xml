@@ -33,11 +33,14 @@
         <entry key="..\:/Twitter clone/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1984375" />
         <entry key="..\:/pip/app/src/main/res/drawable-v24/coustom_edittext.xml" value="0.2078125" />
         <entry key="..\:/pip/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.17051282051282052" />
+        <entry key="..\:/pip/app/src/main/res/drawable/background_ui.xml" value="0.17051282051282052" />
+        <entry key="..\:/pip/app/src/main/res/drawable/btn_with_roundborders.xml" value="0.16835443037974684" />
         <entry key="..\:/pip/app/src/main/res/drawable/coustom_edittext.xml" value="0.17051282051282052" />
         <entry key="..\:/pip/app/src/main/res/drawable/ic_baseline_account_circle_24(1).xml" value="0.18504273504273505" />
         <entry key="..\:/pip/app/src/main/res/drawable/ic_baseline_account_circle_24.xml" value="0.17051282051282052" />
         <entry key="..\:/pip/app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.17051282051282052" />
         <entry key="..\:/pip/app/src/main/res/drawable/ic_baseline_add_photo_alternate_24.xml" value="0.17051282051282052" />
+        <entry key="..\:/pip/app/src/main/res/drawable/ic_baseline_calendar_today_24.xml" value="0.16835443037974684" />
         <entry key="..\:/pip/app/src/main/res/drawable/ic_baseline_close_24.xml" value="0.17051282051282052" />
         <entry key="..\:/pip/app/src/main/res/drawable/ic_baseline_face_24.xml" value="0.17051282051282052" />
         <entry key="..\:/pip/app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.17051282051282052" />
@@ -46,21 +49,31 @@
         <entry key="..\:/pip/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.17051282051282052" />
         <entry key="..\:/pip/app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.17051282051282052" />
         <entry key="..\:/pip/app/src/main/res/drawable/ic_launcher_background.xml" value="0.17051282051282052" />
-        <entry key="..\:/pip/app/src/main/res/layout/activity_account_create.xml" value="0.15726495726495726" />
+        <entry key="..\:/pip/app/src/main/res/drawable/nav_ui.xml" value="0.16835443037974684" />
+        <entry key="..\:/pip/app/src/main/res/drawable/pip_show_ui_for_profile.xml" value="0.17051282051282052" />
+        <entry key="..\:/pip/app/src/main/res/drawable/profile_ui.xml" value="0.16835443037974684" />
+        <entry key="..\:/pip/app/src/main/res/drawable/search_user_detailed_contains.xml" value="0.16835443037974684" />
+        <entry key="..\:/pip/app/src/main/res/layout/activity_account_create.xml" value="0.16" />
         <entry key="..\:/pip/app/src/main/res/layout/activity_comment.xml" value="0.1" />
         <entry key="..\:/pip/app/src/main/res/layout/activity_login.xml" value="0.15726495726495726" />
         <entry key="..\:/pip/app/src/main/res/layout/activity_main.xml" value="0.16" />
+        <entry key="..\:/pip/app/src/main/res/layout/activity_pip_splash_screen.xml" value="0.15726495726495726" />
         <entry key="..\:/pip/app/src/main/res/layout/activity_twitpage.xml" value="0.15081521739130435" />
         <entry key="..\:/pip/app/src/main/res/layout/activity_twittingpage_user.xml" value="0.15081521739130435" />
+        <entry key="..\:/pip/app/src/main/res/layout/activity_user_profile_visit.xml" value="0.35233160621761656" />
         <entry key="..\:/pip/app/src/main/res/layout/edit_user_profile.xml" value="0.18" />
         <entry key="..\:/pip/app/src/main/res/layout/fragment_home.xml" value="0.15081521739130435" />
         <entry key="..\:/pip/app/src/main/res/layout/fragment_profile.xml" value="0.22" />
         <entry key="..\:/pip/app/src/main/res/layout/fragment_search.xml" value="0.16" />
-        <entry key="..\:/pip/app/src/main/res/layout/homepagetoseepip.xml" value="0.15" />
-        <entry key="..\:/pip/app/src/main/res/layout/pipusername.xml" value="0.15" />
+        <entry key="..\:/pip/app/src/main/res/layout/homepagetoseepip.xml" value="0.5" />
+        <entry key="..\:/pip/app/src/main/res/layout/pip_splash_screen.xml" value="0.15726495726495726" />
+        <entry key="..\:/pip/app/src/main/res/layout/pipusername.xml" value="0.18" />
+        <entry key="..\:/pip/app/src/main/res/layout/profile_user_pip_data_structure.xml" value="0.5" />
         <entry key="..\:/pip/app/src/main/res/layout/showcomments.xml" value="0.14" />
         <entry key="..\:/pip/app/src/main/res/layout/usercomment.xml" value="0.14" />
         <entry key="..\:/pip/app/src/main/res/layout/usercommentpageadapter.xml" value="0.15726495726495726" />
+        <entry key="..\:/pip/app/src/main/res/menu/menu.xml" value="0.15726495726495726" />
+        <entry key="..\:/pip/app/src/main/res/menu/popup_menu.xml" value="0.15726495726495726" />
         <entry key="..\:/pip/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
         <entry key="..\:/pip/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1" />
       </map>
@@ -75,7 +88,7 @@
   <component name="VisualizationToolProject">
     <option name="state">
       <ProjectState>
-        <option name="scale" value="0.22" />
+        <option name="scale" value="0.15" />
       </ProjectState>
     </option>
   </component>

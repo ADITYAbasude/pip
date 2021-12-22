@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="borderColor">#DDDDDD</color>
     <color name="red">#B10000</color>
+    <color name="gray_light">#ECECEC</color>
 </resources>

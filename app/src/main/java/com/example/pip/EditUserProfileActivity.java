@@ -6,11 +6,9 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -41,7 +39,6 @@ public class EditUserProfileActivity extends AppCompatActivity {
     private TextInputEditText datePicker, UserName, UserBio, UserLocation, UserWebsite;
     private Button saveChanges;
     private String bio, name, location, website, dateOfBirth;
-    private ProgressBar editText_progressBar;
     private ImageView setImageOfUser;
     private static Uri ImageData, take_uri;
 
@@ -67,7 +64,6 @@ public class EditUserProfileActivity extends AppCompatActivity {
         UserWebsite = findViewById(R.id.UserWebsite);
         datePicker = findViewById(R.id.datePicker);
         saveChanges = findViewById(R.id.saveChanges);
-        editText_progressBar = findViewById(R.id.editText_progressBar);
         setImageOfUser = findViewById(R.id.setImageOfUser);
 
         datePicker.setOnClickListener(v -> datePickerFunctionInvoked());
@@ -78,7 +74,6 @@ public class EditUserProfileActivity extends AppCompatActivity {
             location = UserLocation.getText().toString();
             dateOfBirth = datePicker.getText().toString();
             website = UserWebsite.getText().toString();
-            editText_progressBar.setVisibility(View.VISIBLE);
             FirebaseDatabase.getInstance().getReference("user").child("UserInfo").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                     .addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -97,7 +92,6 @@ public class EditUserProfileActivity extends AppCompatActivity {
                     .child("EditedData").setValue(user);
 
 
-            editText_progressBar.setVisibility(View.GONE);
             uploadImage(ImageData);
 
         });
@@ -175,24 +169,12 @@ public class EditUserProfileActivity extends AppCompatActivity {
     }
 
     private void uploadImage(Uri imageData) {
-        storageRef.putFile(imageData).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        User user = new User(uri.toString());
-                        firebaseRef.setValue(user);
-
-                    }
-                });
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(EditUserProfileActivity.this, "Image fail to uploaded", Toast.LENGTH_SHORT).show();
-            }
-        });
+        if (imageData.toString().length() != 0) {
+            storageRef.putFile(imageData).addOnSuccessListener(taskSnapshot -> storageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                User user = new User(uri.toString());
+                firebaseRef.setValue(user);
+            })).addOnFailureListener(e -> Toast.makeText(EditUserProfileActivity.this, "Image fail to uploaded", Toast.LENGTH_SHORT).show());
+        }
     }
 
 
@@ -226,7 +208,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
         FirebaseDatabase.getInstance().getReference("user").child("UserInfo").child(userInfo).child("EditedData").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                // if user data in firebase  , then it will show to data otherwise it show the null value in edittext . So you can write and create you personal information
+                // if user data in firebase  , then it will show the data ,  otherwise it will show the null values in edittext . So you can write and create your personal information
                 if (snapshot.exists()) {
                     User user = snapshot.getValue(User.class);
                     UserBio.setText(user.Bio);

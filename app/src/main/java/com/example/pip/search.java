@@ -60,7 +60,7 @@ public class search extends Fragment {
         userNotFound = view.findViewById(R.id.userNotFound);
 
 
-        gup = new follow_page(getContext(), Store_User_Info, Store_User_Img);
+        gup = new follow_page(getContext(), Store_User_Info);
         storePipUerName.setLayoutManager(new LinearLayoutManager(getContext()));
 
         storePipUerName.setAdapter(gup);

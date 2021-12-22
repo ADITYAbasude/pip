@@ -51,40 +51,12 @@ public class homePagePipAdapter extends RecyclerView.Adapter<homePagePipAdapter.
         holder.heartCount.setText(user.like);
 
 
-        countTheComments(holder.CommentCount, user);
+//        countTheComments(holder.CommentCount, user);
+//
 
-        try {
-            heart.setOnClickListener(view -> {
-                if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-                    holder.likeCount = user.like;
-                    holder.parseInIntegerLikeCount = Integer.parseInt(holder.likeCount);
-                    countLike = holder.parseInIntegerLikeCount;
+        heart.setOnClickListener(view -> {
 
-                    if (holder.checkLikeOrNot == false) {
-                        if (countLike != 0) {
-                            heart.setImageResource(R.drawable.heart);
-                            countLike--;
-                            holder.checkLikeOrNot = true;
-                            holder.heartCount.setText(String.valueOf(countLike));
-                            likeMinesMines(user);
-
-                        }
-                    } else {
-                        heart.setImageResource(R.drawable.heartred);
-                        countLike++;
-                        likePlusPlus(user);
-                        holder.heartCount.setText(String.valueOf(countLike));
-                        holder.checkLikeOrNot = false;
-                    }
-
-                } else {
-                    Toast.makeText(context, "Please login", Toast.LENGTH_SHORT).show();
-                }
-            });
-
-        } catch (Exception e) {
-            Toast.makeText(context, "Please try again", Toast.LENGTH_SHORT).show();
-        }
+        });
 
 
         holder.comment.setOnClickListener(view -> {
@@ -106,78 +78,78 @@ public class homePagePipAdapter extends RecyclerView.Adapter<homePagePipAdapter.
 
 
     }
-
-    private void countTheComments(TextView commentCount, User user) {
-
-        FirebaseDatabase.getInstance().getReference("user").child("All-User-Pip-Data").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot ds : snapshot.getChildren()) {
-                    ds.getRef().child("comment").orderByChild("pipPostData").equalTo(user.pipPostData).addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot2) {
-                            int countcomment = (int) snapshot2.getChildrenCount();
-                            commentCount.setText(countcomment + "");
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-//        commentCount.setText("88");
-    }
-
-    private void likeMinesMines(User user) {
-        FirebaseDatabase.getInstance().getReference("user").child("All-User-Pip-Data").orderByChild("pipPostData")
-                .equalTo(user.pipPostData)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @SuppressLint("NotifyDataSetChanged")
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (DataSnapshot ds : snapshot.getChildren()) {
-                            ds.getRef().child("like").setValue(String.valueOf(countLike));
-                        }
-                        notifyDataSetChanged();
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-    }
-
-    private void likePlusPlus(User user) {
-        FirebaseDatabase.getInstance().getReference("user").child("All-User-Pip-Data").orderByChild("pipPostData")
-                .equalTo(user.pipPostData)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @SuppressLint("NotifyDataSetChanged")
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (DataSnapshot ds : snapshot.getChildren()) {
-                            ds.getRef().child("like").setValue(String.valueOf(countLike));
-                        }
-                        notifyDataSetChanged();
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-
-    }
+//
+//    private void countTheComments(TextView commentCount, User user) {
+//
+//        FirebaseDatabase.getInstance().getReference("user").child("All-User-Pip-Data").addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                for (DataSnapshot ds : snapshot.getChildren()) {
+//                    ds.getRef().child("comment").orderByChild("pipPostData").equalTo(user.pipPostData).addValueEventListener(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(@NonNull DataSnapshot snapshot2) {
+//                            int countcomment = (int) snapshot2.getChildrenCount();
+//                            commentCount.setText(countcomment + "");
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(@NonNull DatabaseError error) {
+//
+//                        }
+//                    });
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//
+////        commentCount.setText("88");
+//    }
+//
+//    private void likeMinesMines(User user) {
+//        FirebaseDatabase.getInstance().getReference("user").child("All-User-Pip-Data").orderByChild("pipPostData")
+//                .equalTo(user.pipPostData)
+//                .addListenerForSingleValueEvent(new ValueEventListener() {
+//                    @SuppressLint("NotifyDataSetChanged")
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                        for (DataSnapshot ds : snapshot.getChildren()) {
+//                            ds.getRef().child("like").setValue(String.valueOf(countLike));
+//                        }
+//                        notifyDataSetChanged();
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError error) {
+//
+//                    }
+//                });
+//    }
+//
+//    private void likePlusPlus(User user) {
+//        FirebaseDatabase.getInstance().getReference("user").child("All-User-Pip-Data").orderByChild("pipPostData")
+//                .equalTo(user.pipPostData)
+//                .addListenerForSingleValueEvent(new ValueEventListener() {
+//                    @SuppressLint("NotifyDataSetChanged")
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                        for (DataSnapshot ds : snapshot.getChildren()) {
+//                            ds.getRef().child("like").setValue(String.valueOf(countLike));
+//                        }
+//                        notifyDataSetChanged();
+//
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError error) {
+//
+//                    }
+//                });
+//
+//    }
 
 
     @Override

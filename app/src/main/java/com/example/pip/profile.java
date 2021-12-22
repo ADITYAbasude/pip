@@ -25,17 +25,18 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
 
 public class profile extends Fragment {
 
 
-    private TextView UserName, logout, editProfile;
+    private TextView UserName, logout, editProfile, followingCount , profileTextBtn;
     private DatabaseReference ref;
     private ImageView profileimg;
     private final DatabaseReference firebaseRef = FirebaseDatabase.getInstance().getReference("user")
             .child("UserInfo").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Profile_Image");
+    private final DatabaseReference followingChild_ref = FirebaseDatabase.getInstance().getReference("user").child("UserInfo")
+            .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Following");
     private static Uri take_uri;
     private ProgressBar ProfileStatus;
 
@@ -66,7 +67,8 @@ public class profile extends Fragment {
         logout = view.findViewById(R.id.logout);
         editProfile = view.findViewById(R.id.editProfile);
         ProfileStatus = view.findViewById(R.id.progressBarstatus);
-
+        followingCount = view.findViewById(R.id.following_number);
+        profileTextBtn = view.findViewById(R.id.profileTextBtn);
 
 //        name taking from database
         ref = FirebaseDatabase.getInstance().getReference();
@@ -104,7 +106,21 @@ public class profile extends Fragment {
         pickImage_uri_fromFirebase();
         setImage();
 
+
+//        ---------Following count-------------
+
+        count_following();
+
+//        --------------follower count----------
+        count_followers();
+
+//        ----------profile_vist-----
+        profileTextBtn.setOnClickListener(v -> {
+            Intent move_to_profile_page = new Intent(getContext() , User_profile_visit.class);
+            startActivity(move_to_profile_page);
+        });
     }
+
 
 
     //-------------------------logout option function for user -----------------
@@ -113,6 +129,8 @@ public class profile extends Fragment {
             FirebaseAuth.getInstance().signOut();
             Intent inte = new Intent(getContext(), loginActivity.class);
             startActivity(inte);
+            getActivity().finish();
+
         });
     }
 
@@ -164,5 +182,25 @@ public class profile extends Fragment {
             Intent intent = new Intent(getContext(), EditUserProfileActivity.class);
             startActivity(intent);
         });
+    }
+
+
+    private void count_following() {
+        followingChild_ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    followingCount.setText(String.valueOf(snapshot.getChildrenCount()));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+    private void count_followers(){
+
     }
 }

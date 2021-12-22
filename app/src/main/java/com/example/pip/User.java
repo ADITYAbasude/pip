@@ -1,7 +1,7 @@
 package com.example.pip;
 
 public class User {
-    public String User_Profile_Image_Uri, email, password, usName, pipPostData, pipuserName, like, date, usercomments, commentPostUserName, Bio, Location, Website, dateOfBirth;
+    public String pip_id, User_Profile_Image_Uri, email, password, usName, pipPostData, pipuserName, like, date, usercomments, commentPostUserName, Bio, Location, Website, dateOfBirth;
 
     public User() {
 
@@ -18,10 +18,10 @@ public class User {
         this.usName = Uername;
     }
 
-    public User(String pipPostData, String pipuserName, String like, String date) {
+    public User(String pipPostData, String pipuserName, String pip_id, String date) {
         this.pipPostData = pipPostData;
         this.pipuserName = pipuserName;
-        this.like = like;
+        this.pip_id = pip_id;
         this.date = date;
 
     }

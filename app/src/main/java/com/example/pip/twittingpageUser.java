@@ -49,21 +49,16 @@ public class twittingpageUser extends AppCompatActivity {
         submmitPip.setOnClickListener(view -> {
             DatabaseReference puskKey = FirebaseDatabase.getInstance().getReference("user").push();
             String getPipData = takingPipFromUser.getText().toString().trim();
-            User user = new User(getPipData, storeUserName, "0", "0");
-            FirebaseDatabase.getInstance().getReference("user").child("All-User-Pip-Data")
-                    .child(puskKey.getKey())
-                    .setValue(user).addOnCompleteListener(task -> {
+            User user = new User(getPipData, storeUserName ,puskKey.getKey(), "0");
+            FirebaseDatabase.getInstance().getReference("user").child("UserPost").child("UserPipData")
+                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                    .child(puskKey.getKey()).setValue(user).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     takingPipFromUser.setText("");
                 } else {
                     Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
                 }
             });
-
-            User user1 = new User(getPipData, storeUserName, "0", "0");
-            FirebaseDatabase.getInstance().getReference("user").child("UserPost").child("UserPipData")
-                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                    .child(puskKey.getKey()).setValue(user1);
         });
     }
 

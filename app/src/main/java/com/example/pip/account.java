@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -29,6 +30,7 @@ public class account extends AppCompatActivity {
         createAccount = findViewById(R.id.createAccount);
         auth = FirebaseAuth.getInstance();
 
+        Handler handler = new Handler();
 
         Dexter.withContext(this)
                 .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -64,9 +66,11 @@ public class account extends AppCompatActivity {
         });
 
         if (auth.getCurrentUser() != null){
-            Intent mainactivity = new Intent(this , twitpage.class);
+            Intent mainactivity = new Intent(this , pip_splash_screen.class);
             startActivity(mainactivity);
+            finish();
         }
+
 
 
     }

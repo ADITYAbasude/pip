@@ -12,7 +12,6 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class loginActivity extends AppCompatActivity {
     Button logbtn;
-    ImageView googlelogin, facebooklogin;
     EditText useridtaken, passwordtaken;
     FirebaseAuth cerateaccountdata;
     ProgressBar progressBar2;
@@ -26,8 +25,6 @@ public class loginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         cerateaccountdata = FirebaseAuth.getInstance();
         logbtn = findViewById(R.id.loginBtn);
-        googlelogin = findViewById(R.id.googlelogin);
-        facebooklogin = findViewById(R.id.facbookLogin);
         useridtaken = findViewById(R.id.userNameAndId);
         passwordtaken = findViewById(R.id.userpasswordId);
         progressBar2 = findViewById(R.id.progressBar2);
@@ -68,6 +65,10 @@ public class loginActivity extends AppCompatActivity {
             }
 
         });
+
+
+
+
 
 
     }

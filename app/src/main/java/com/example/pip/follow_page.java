@@ -1,5 +1,6 @@
 package com.example.pip;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.Uri;
 import android.view.LayoutInflater;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,14 +27,15 @@ import java.util.List;
 
 public class follow_page extends RecyclerView.Adapter<follow_page.MyViewAdapter> {
     ArrayList<User> arr;
-    ArrayList<User> Store_User_Img;
     Context context;
     Uri take_Uri;
+    String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    String takeSnapshotRef;
+    ArrayList<follow> store_follow_id;
 
-    public follow_page(Context context, ArrayList<User> arr, ArrayList<User> Store_User_Img) {
+    public follow_page(Context context, ArrayList<User> arr) {
         this.context = context;
         this.arr = arr;
-        this.Store_User_Img = Store_User_Img;
     }
 
     @NonNull
@@ -42,6 +45,7 @@ public class follow_page extends RecyclerView.Adapter<follow_page.MyViewAdapter>
         return new MyViewAdapter(v);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull MyViewAdapter holder, int position) {
         User user = arr.get(position);
@@ -50,11 +54,12 @@ public class follow_page extends RecyclerView.Adapter<follow_page.MyViewAdapter>
                 .addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                        takeSnapshotRef = snapshot.getKey();
                         snapshot.getRef().child("Profile_Image").addValueEventListener(new ValueEventListener() {
                             @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                if (snapshot.exists()) {
-                                    User Img_Link = snapshot.getValue(User.class);
+                            public void onDataChange(@NonNull DataSnapshot snapshot1) {
+                                if (snapshot1.exists()) {
+                                    User Img_Link = snapshot1.getValue(User.class);
                                     take_Uri = Uri.parse(Img_Link.User_Profile_Image_Uri);
                                     Glide.with(context).load(take_Uri).into(holder.set_User_Image);
                                 } else {
@@ -91,87 +96,58 @@ public class follow_page extends RecyclerView.Adapter<follow_page.MyViewAdapter>
                 });
 
 
+        holder.followBtn.setOnClickListener(view -> {
+            if (holder.followBtn.getText().toString() == "FOLLOWING") {
+                FirebaseDatabase.getInstance().getReference("user").child("UserInfo").orderByChild("usName").equalTo(user.usName).addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                        String uid_key = snapshot.getKey();
+                        FirebaseDatabase.getInstance().getReference("user").child("UserInfo").child(uid).child("Following").child(uid_key).setValue(null);
+
+                    }
+
+                    @Override
+                    public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+                holder.followBtn.setText("FOLLOW");
+
+            } else {
+                following(user);
+                holder.followBtn.setText("FOLLOWING");
+
+            }
+        });
+
     }
 
 
-    @Override
-    public int getItemCount() {
-        return arr.size();
-    }
-
-
-    public class MyViewAdapter extends RecyclerView.ViewHolder {
-        TextView setTextPipUser, followBtn;
-        ImageView set_User_Image;
-
-        public MyViewAdapter(@NonNull View itemView) {
-            super(itemView);
-
-            setTextPipUser = itemView.findViewById(R.id.UserPipName);
-            set_User_Image = itemView.findViewById(R.id.set_User_img);
-//            followBtn = itemView.findViewById(R.id.followBtn);
-
-        }
-    }
+//    public void check_follow_or_not(String takeSnapshotRef, TextView followBtn) {
 //
-
-
-//    String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-
-//    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-//
-//        ArrayList<String> storeFollowingUID = new ArrayList<>();
-
-
-//        convertView = LayoutInflater.from(getContext()).inflate(R.layout.pipusername, parent, false);
-
-
-//        Picasso.get().load(user1.User_Profile_Image_Uri).into(set_User_Image);
-
-
-//        followBtn.setOnClickListener(view -> {
-//            if (followBtn.getText().toString() == "Following") {
-//
-//                followBtn.setText("Follow");
-//
-//            } else {
-//                following(storeFollowingUID, user);
-//                FirebaseDatabase.getInstance().getReference("user").child("UserInfo").child(uid)
-//                        .child("Following").push().setValue(storeFollowingUID);
-//
-//            }
-//        });
-
-
-//        FirebaseDatabase.getInstance().getReference().child("user").child("UserInfo").orderByChild(user.usName)
-//                .addValueEventListener(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                        if (snapshot.exists()) {
-//
-//                                                    } else {
-//                            set_User_Image.setImageResource(R.drawable.ic_baseline_account_circle_24);
-//                        }
-//
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError error) {
-//
-//                    }
-//                });
-
-//        return convertView;
-//    }
-
-
-//    private void following(ArrayList<String> storeFollowingUID, User user) {
-//
-//        FirebaseDatabase.getInstance().getReference("user").child("UserInfo").orderByChild("usName").equalTo(user.usName).addChildEventListener(new ChildEventListener() {
+//        FirebaseDatabase.getInstance().getReference("user").child("UserInfo").child(uid).child("Following").addChildEventListener(new ChildEventListener() {
 //            @Override
 //            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-//                storeFollowingUID.add(snapshot.getKey());
+//                for (DataSnapshot ds : snapshot.getChildren()) {
+//                    follow follow_id = ds.getValue(follow.class);
+//                    store_follow_id.add(follow_id);
+//                }
+//
 //            }
 //
 //            @Override
@@ -195,6 +171,60 @@ public class follow_page extends RecyclerView.Adapter<follow_page.MyViewAdapter>
 //            }
 //        });
 //    }
+
+
+    public void following(User user) {
+
+        FirebaseDatabase.getInstance().getReference("user").child("UserInfo").orderByChild("usName").equalTo(user.usName).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                follow follow = new follow(snapshot.getKey());
+                FirebaseDatabase.getInstance().getReference("user").child("UserInfo").child(uid)
+                        .child("Following").child(follow.follower_uid).setValue(follow);
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+
+    @Override
+    public int getItemCount() {
+        return arr.size();
+    }
+
+
+    public class MyViewAdapter extends RecyclerView.ViewHolder {
+        TextView setTextPipUser, followBtn;
+        ImageView set_User_Image;
+
+        public MyViewAdapter(@NonNull View itemView) {
+            super(itemView);
+
+            setTextPipUser = itemView.findViewById(R.id.UserPipName);
+            set_User_Image = itemView.findViewById(R.id.set_User_img);
+            followBtn = itemView.findViewById(R.id.followBtn);
+
+        }
+    }
 
 
 }

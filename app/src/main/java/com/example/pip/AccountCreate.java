@@ -1,29 +1,41 @@
 package com.example.pip;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class AccountCreate extends AppCompatActivity {
-    Button craetebtn;
-    ImageView googlelock, facebooklock;
-    EditText email, userpassword, userName;
-    ProgressBar progressBar;
+    private Button craetebtn;
+    private EditText email, userpassword, userName;
+    private ProgressBar progressBar;
     FirebaseAuth firebaseAuth;
+
+
+
+
 
 
     @Override
@@ -35,12 +47,11 @@ public class AccountCreate extends AppCompatActivity {
         setContentView(R.layout.activity_account_create);
         firebaseAuth = FirebaseAuth.getInstance();
         craetebtn = findViewById(R.id.createaccountwithbtn);
-        googlelock = findViewById(R.id.googlelog);
-        facebooklock = findViewById(R.id.faccbooklog);
         userpassword = findViewById(R.id.userpassword);
         progressBar = findViewById(R.id.progressBar);
         email = findViewById(R.id.emailid);
         userName =  findViewById(R.id.takename);
+
 
 
 
@@ -59,7 +70,15 @@ public class AccountCreate extends AppCompatActivity {
             }else if (passwordlenght.length() <= 7) {
                 userpassword.setError("Your password must be 8 (Letters , Numbers , and other) mixing");
                 userpassword.requestFocus();
-            }else if (!passwordlenght.isEmpty() && !ususerlenght.isEmpty()) {
+            }else if(NameofUser.isEmpty()){
+                userName.setError("Full fill this");
+                userName.requestFocus();
+            }
+            else if(email.length() == 0){
+                userName.setError("Full fill this");
+                userName.requestFocus();
+            }
+            else if (!passwordlenght.isEmpty() && !ususerlenght.isEmpty()) {
                 firebaseAuth.createUserWithEmailAndPassword(ususerlenght, passwordlenght)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
@@ -76,6 +95,7 @@ public class AccountCreate extends AppCompatActivity {
                                                     Intent mainpage = new Intent(AccountCreate.this, twitpage.class);
                                                     startActivity(mainpage);
                                                     progressBar.setVisibility(view.GONE);
+                                                    finish();
                                                 } else {
                                                     Toast.makeText(AccountCreate.this, "Failed", Toast.LENGTH_SHORT).show();
                                                 }
@@ -91,4 +111,11 @@ public class AccountCreate extends AppCompatActivity {
         });
 
     }
+
+
+
+
+
+
+
 }

@@ -13,9 +13,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Twitter">
         <activity
+            android:name=".User_profile_visit"
+            android:exported="false" />
+        <activity
+            android:name=".pip_splash_screen"
+            android:exported="false" />
+        <activity
             android:name=".EditUserProfileActivity"
             android:exported="false"
-            android:parentActivityName=".twitpage"/>
+            android:parentActivityName=".twitpage" />
         <activity
             android:name=".userComment"
             android:exported="false"

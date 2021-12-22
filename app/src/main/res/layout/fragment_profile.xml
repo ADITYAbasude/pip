@@ -74,6 +74,17 @@
             app:layout_constraintTop_toBottomOf="@+id/UserName" />
 
         <TextView
+            android:id="@+id/following_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:paddingLeft="5dp"
+            android:text="0"
+            android:textColor="#000000"
+            app:layout_constraintStart_toEndOf="@+id/textView4"
+            app:layout_constraintTop_toBottomOf="@+id/UserName" />
+
+        <TextView
             android:id="@+id/textView5"
             android:layout_width="65dp"
             android:layout_height="19dp"
@@ -87,125 +98,146 @@
             app:layout_constraintStart_toEndOf="@+id/textView4"
             app:layout_constraintTop_toBottomOf="@+id/UserName" />
 
-        <ScrollView
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:paddingLeft="5dp"
+            android:text="0"
+            android:textColor="#000000"
+            app:layout_constraintStart_toEndOf="@+id/textView5"
+            app:layout_constraintTop_toBottomOf="@+id/UserName" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/profile_ui"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView4">
+            app:layout_constraintTop_toBottomOf="@+id/textView5">
 
-            <LinearLayout
+            <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/profile_ui"
+                    android:orientation="vertical">
 
-                    <ImageView
-                        android:id="@+id/imageView8"
-                        android:layout_width="75dp"
-                        android:layout_height="20dp"
-                        android:layout_marginTop="55dp"
-                        android:layout_weight="0"
-                        android:paddingLeft="30dp"
-                        android:src="@drawable/user" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/profilrTextBtn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="50dp"
-                        android:paddingLeft="10dp"
-                        android:text="Profile"
-                        android:textColor="@color/black"
-                        android:textSize="21sp" />
+                        <ImageView
+                            android:id="@+id/imageView8"
+                            android:layout_width="75dp"
+                            android:layout_height="20dp"
+                            android:layout_marginTop="55dp"
+                            android:layout_weight="0"
+                            android:paddingLeft="30dp"
+                            android:src="@drawable/user" />
+
+                        <TextView
+                            android:id="@+id/profileTextBtn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="50dp"
+                            android:paddingLeft="10dp"
+                            android:text="Profile"
+                            android:textColor="@color/black"
+                            android:textSize="21sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/imageView7"
+                            android:layout_width="70dp"
+                            android:layout_height="25dp"
+                            android:layout_marginTop="30dp"
+                            android:layout_weight="0"
+                            android:paddingLeft="30dp"
+                            android:src="@drawable/edit" />
+
+                        <TextView
+                            android:id="@+id/editProfile"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="30dp"
+                            android:paddingLeft="10dp"
+                            android:text="Edit Profile"
+                            android:textColor="@android:color/black"
+                            android:textSize="20sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/imageView6"
+                            android:layout_width="70dp"
+                            android:layout_height="20dp"
+                            android:layout_marginTop="35dp"
+                            android:layout_weight="0"
+                            android:paddingLeft="40dp"
+                            android:src="@drawable/settinglines" />
+
+                        <TextView
+                            android:id="@+id/serttingsAndPrivercy"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="30dp"
+                            android:paddingLeft="10dp"
+                            android:text="Settings and Privercy"
+                            android:textColor="@color/black"
+                            android:textSize="21dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/imageView5"
+                            android:layout_width="70dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="top"
+                            android:layout_marginTop="35dp"
+                            android:layout_weight="0"
+                            android:paddingLeft="40dp"
+                            android:src="@drawable/logout" />
+
+                        <TextView
+                            android:id="@+id/logout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="30dp"
+                            android:paddingLeft="10dp"
+                            android:text="Log Out"
+                            android:textColor="@color/red"
+                            android:textSize="21sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/imageView7"
-                        android:layout_width="70dp"
-                        android:layout_height="25dp"
-                        android:layout_marginTop="30dp"
-                        android:layout_weight="0"
-                        android:paddingLeft="30dp"
-                        android:src="@drawable/edit" />
-
-                    <TextView
-                        android:id="@+id/editProfile"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="30dp"
-                        android:paddingLeft="10dp"
-                        android:text="Edit Profile"
-                        android:textColor="@android:color/black"
-                        android:textSize="20sp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/imageView6"
-                        android:layout_width="70dp"
-                        android:layout_height="20dp"
-                        android:layout_marginTop="35dp"
-                        android:layout_weight="0"
-                        android:paddingLeft="40dp"
-                        android:src="@drawable/settinglines" />
-
-                    <TextView
-                        android:id="@+id/serttingsAndPrivercy"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="30dp"
-                        android:paddingLeft="10dp"
-                        android:text="Settings and Privercy"
-                        android:textColor="@color/black"
-                        android:textSize="21dp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/imageView5"
-                        android:layout_width="70dp"
-                        android:layout_height="20dp"
-                        android:layout_gravity="top"
-                        android:layout_marginTop="35dp"
-                        android:layout_weight="0"
-                        android:paddingLeft="40dp"
-                        android:src="@drawable/logout" />
-
-                    <TextView
-                        android:id="@+id/logout"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="30dp"
-                        android:paddingLeft="10dp"
-                        android:text="Log Out"
-                        android:textColor="@color/black"
-                        android:textSize="21sp"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-        </ScrollView>
+            </ScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
