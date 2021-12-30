@@ -1,8 +1,9 @@
 package com.example.pip;
 
-import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -11,9 +12,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -27,21 +30,27 @@ import java.util.ArrayList;
 public class userComment extends AppCompatActivity {
 
     private TextView setUserNameInCommentSection, setUserPipDataInCommentSection;
-    private DatabaseReference takeRef = FirebaseDatabase.getInstance().getReference("user").child("All-User-Pip-Data");
-    private ImageView sendBtn;
+    private final DatabaseReference userDataRef = FirebaseDatabase.getInstance().getReference("user").child("UserInfo");
+    private ImageView sendBtn, userPhotoInCommentPage;
+    private final DatabaseReference userPipDataRef = FirebaseDatabase.getInstance().getReference("user").child("UserPost").child("UserPipData");
     private EditText writeComment;
     private RecyclerView showComment;
-    private ArrayList<User> storeUserReply = new ArrayList<>();
+    private ArrayList<comment> storeUserReply = new ArrayList<>();
     showCommentAdapter showcommentadapter;
     private ProgressBar progressBarInRecyclerView;
-    private String usernamesertext;
+    private String storeUserName, Store_pip_id, u_id, ImageUri;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.usercomment);
+
+
 //        ---------------------ActionBar hide------------------
         getSupportActionBar().hide();
+
+        Window window = this.getWindow();
+        window.setStatusBarColor(ContextCompat.getColor(this, R.color.gray_light));
 
 //----------------------------id declare----------------
         setUserNameInCommentSection = findViewById(R.id.setUserNameInCommentSection);
@@ -50,126 +59,151 @@ public class userComment extends AppCompatActivity {
         writeComment = findViewById(R.id.writeComment);
         showComment = findViewById(R.id.showComment);
         progressBarInRecyclerView = findViewById(R.id.progressBarInRecyclerView);
+        userPhotoInCommentPage = findViewById(R.id.userPhotoInCommentPage);
+
 
         Bundle getData = getIntent().getExtras();
 
 
         setUserNameInCommentSection.setText(getData.getString("userName"));
         setUserPipDataInCommentSection.setText(getData.getString("pipData"));
+        Store_pip_id = getData.getString("pip_id");
+
+
+        userDataRef.orderByChild("usName").equalTo(setUserNameInCommentSection.getText().toString()).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                u_id = snapshot.getRef().getKey();
+                setUserImage(u_id);
+                setUserCommentToRecycler(u_id);
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        userDataRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Profile_Image").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User user = snapshot.getValue(User.class);
+                ImageUri = user.User_Profile_Image_Uri;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                ImageUri = null;
+            }
+        });
+
+        userDataRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User user = snapshot.getValue(User.class);
+                storeUserName = user.usName;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         showComment.setHasFixedSize(true);
         showcommentadapter = new showCommentAdapter(this, storeUserReply);
-        showComment.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
+        showComment.setLayoutManager(layoutManager);
         showComment.setAdapter(showcommentadapter);
 
 
-        setCommentFromUser();
-
-        getCommentFromFirebase();
-        getName();
-
-
-    }
-
-
-    private void setCommentFromUser() {
-        sendBtn.setOnClickListener(view -> takeRef.orderByChild("pipPostData").equalTo(setUserPipDataInCommentSection.getText().toString())
-                .addChildEventListener(new ChildEventListener() {
-
-                    User user = new User(writeComment.getText().toString(), usernamesertext);
-
-                    @Override
-                    public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                        snapshot.getRef().child("comment").push().setValue(user);
-                    }
-
-                    @Override
-                    public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                    }
-
-                    @Override
-                    public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-                    }
-
-                    @Override
-                    public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                }));
-    }
-
-
-    private void getCommentFromFirebase() {
         progressBarInRecyclerView.setVisibility(View.VISIBLE);
-        FirebaseDatabase.getInstance().getReference("user").child("All-User-Pip-Data").orderByChild("pipPostData").equalTo(setUserPipDataInCommentSection.getText().toString())
-                .addChildEventListener(new ChildEventListener() {
-                    @Override
-                    public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                        if (snapshot.exists()) {
-                            snapshot.getRef().child("comment").addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    storeUserReply.clear();
-                                    for (DataSnapshot ds : snapshot.getChildren()) {
-                                        User user = ds.getValue(User.class);
-                                        storeUserReply.add(user);
-                                    }
-                                    showcommentadapter.notifyDataSetChanged();
-                                }
+        takeCommentFromUser();
 
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
 
-                                }
-                            });
-                        }
-                    }
+    }
 
-                    @Override
-                    public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+    private void setUserImage(String uid) {
+        userDataRef.child(uid).child("Profile_Image").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    User user = snapshot.getValue(User.class);
+                    Glide.with(userComment.this).load(Uri.parse(user.User_Profile_Image_Uri)).into(userPhotoInCommentPage);
+                } else {
+                    userPhotoInCommentPage.setImageResource(R.drawable.ic_baseline_account_circle_24);
+                }
 
-                    }
+            }
 
-                    @Override
-                    public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-                    }
+            }
+        });
+    }
 
-                    @Override
-                    public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
-                    }
+    private void takeCommentFromUser() {
+        sendBtn.setOnClickListener(v -> {
+            comment comment = new comment(FirebaseAuth.getInstance().getUid(), writeComment.getText().toString(), ImageUri
+                    , storeUserName);
+            userPipDataRef.child(u_id).child(Store_pip_id).child("Comments").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    snapshot.getRef().push().setValue(comment);
+                    writeComment.setText("");
+                }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-                    }
-                });
+                }
+            });
+        });
+    }
+
+
+    private void setUserCommentToRecycler(String uid) {
+
         progressBarInRecyclerView.setVisibility(View.GONE);
+
+        userPipDataRef.child(uid).child(Store_pip_id).child("Comments").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    storeUserReply.clear();
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+                        comment comment = ds.getValue(comment.class);
+                        storeUserReply.add(comment);
+                    }
+                    showcommentadapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
 
-    public void getName() {
-        FirebaseDatabase.getInstance().getReference("user").child("UserInfo").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        User userprofile = snapshot.getValue(User.class);
-                        usernamesertext = userprofile.usName;
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-
-    }
 }

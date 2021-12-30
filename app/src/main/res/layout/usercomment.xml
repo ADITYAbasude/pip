@@ -3,18 +3,32 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F8F8F8">
 
-    <ImageView
-        android:id="@+id/userPhotoInCommentPage"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        app:cardCornerRadius="100dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_account_circle_24"
-        android:contentDescription="TODO" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/userPhotoInCommentPage"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:contentDescription="TODO"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/ic_baseline_account_circle_24" />
+        </androidx.cardview.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/setUserNameInCommentSection"
@@ -25,88 +39,88 @@
         android:textColor="@color/black"
         android:textSize="15sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/userPhotoInCommentPage"
+        app:layout_constraintStart_toEndOf="@+id/cardView8"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ScrollView
-        android:id="@+id/scrollView2"
-        style="@android:style/Widget.ScrollView"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/setUserPipDataInCommentSection"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="16dp"
-        android:scrollbarSize="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/showComment"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/userPhotoInCommentPage"
-        app:layout_constraintTop_toBottomOf="@+id/setUserNameInCommentSection">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/setUserPipDataInCommentSection"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="16dp"
-                android:background="#EFEFEF"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:scrollbars="vertical"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                tools:ignore="SpeakableTextPresentCheck" />
-        </LinearLayout>
-    </ScrollView>
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:textColor="#000000"
+        app:layout_constraintStart_toEndOf="@+id/cardView8"
+        app:layout_constraintTop_toBottomOf="@+id/setUserNameInCommentSection"
+        app:layout_constraintWidth_max="200dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/showComment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/pip_show_ui_for_profile"
         android:paddingLeft="50dp"
+        android:paddingRight="10dp"
         app:layout_constraintBottom_toTopOf="@+id/writeComment"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
+        app:layout_constraintTop_toBottomOf="@+id/setUserPipDataInCommentSection"
+        app:layout_constraintVertical_bias="1.0" />
 
     <EditText
         android:id="@+id/writeComment"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/search_user_detailed_contains"
+        android:elevation="3dp"
         android:ems="10"
-        android:gravity="start|top"
-        android:inputType="textMultiLine"
+        android:gravity="fill"
+        android:inputType="textLongMessage|textMultiLine"
+        android:maxWidth="80dp"
         android:maxHeight="100dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/sendBtn"
+        app:layout_constraintEnd_toStartOf="@+id/cardView7"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="SpeakableTextPresentCheck" />
 
-    <ImageView
-        android:id="@+id/sendBtn"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginEnd="16dp"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView7"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:elevation="3dp"
+        app:cardCornerRadius="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/send" />
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:id="@+id/sendBtn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/send" />
+    </androidx.cardview.widget.CardView>
 
     <ProgressBar
         android:id="@+id/progressBarInRecyclerView"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

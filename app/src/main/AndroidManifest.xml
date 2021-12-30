@@ -13,6 +13,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Twitter">
         <activity
+            android:name=".pip_view"
+            android:exported="true"
+            android:parentActivityName=".twitpage" />
+        <activity
+            android:name=".aboutapp"
+            android:exported="true"
+            android:parentActivityName=".settingsAnsPrivercy"/>
+        <activity
+            android:name=".feedback"
+            android:exported="true"
+            android:parentActivityName=".settingsAnsPrivercy"/>
+
+        <activity
+            android:name=".settingsAnsPrivercy"
+            android:exported="false" />
+        <activity
+            android:name=".Visit_Another_profile"
+            android:exported="false" />
+        <activity
             android:name=".User_profile_visit"
             android:exported="false" />
         <activity

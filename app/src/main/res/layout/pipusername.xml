@@ -53,14 +53,15 @@
         app:layout_constraintWidth_max="wrap" />
 
     <Button
-        android:id="@+id/followBtn"
+        android:id="@+id/Visit_profile"
         android:layout_width="wrap_content"
         android:layout_height="35dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/btn_with_roundborders"
-        android:text="Follow"
+        android:text="Visit Profile"
+        android:textAllCaps="false"
         android:textColor="#000000"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"

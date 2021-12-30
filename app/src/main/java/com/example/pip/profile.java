@@ -30,13 +30,13 @@ import com.google.firebase.database.ValueEventListener;
 public class profile extends Fragment {
 
 
-    private TextView UserName, logout, editProfile, followingCount , profileTextBtn;
+    private TextView UserName, logout, editProfile, followingCount , profileTextBtn , Follower_count , settingAndPrivacy;
     private DatabaseReference ref;
     private ImageView profileimg;
     private final DatabaseReference firebaseRef = FirebaseDatabase.getInstance().getReference("user")
             .child("UserInfo").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Profile_Image");
     private final DatabaseReference followingChild_ref = FirebaseDatabase.getInstance().getReference("user").child("UserInfo")
-            .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Following");
+            .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
     private static Uri take_uri;
     private ProgressBar ProfileStatus;
 
@@ -69,6 +69,8 @@ public class profile extends Fragment {
         ProfileStatus = view.findViewById(R.id.progressBarstatus);
         followingCount = view.findViewById(R.id.following_number);
         profileTextBtn = view.findViewById(R.id.profileTextBtn);
+        Follower_count = view.findViewById(R.id.Follower_count);
+        settingAndPrivacy = view.findViewById(R.id.settingsAndPrivercy);
 
 //        name taking from database
         ref = FirebaseDatabase.getInstance().getReference();
@@ -111,8 +113,8 @@ public class profile extends Fragment {
 
         count_following();
 
-//        --------------follower count----------
-        count_followers();
+//        ------------setting page -----------------
+        invokeSettingAndPrivacy();
 
 //        ----------profile_vist-----
         profileTextBtn.setOnClickListener(v -> {
@@ -184,9 +186,15 @@ public class profile extends Fragment {
         });
     }
 
+    private void invokeSettingAndPrivacy(){
+        settingAndPrivacy.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext() , settingsAnsPrivercy.class);
+            startActivity(intent);
+        });
+    }
 
     private void count_following() {
-        followingChild_ref.addValueEventListener(new ValueEventListener() {
+        followingChild_ref.child("Following").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
@@ -199,8 +207,21 @@ public class profile extends Fragment {
 
             }
         });
-    }
-    private void count_followers(){
+
+        followingChild_ref.child("Follower").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    Follower_count.setText(String.valueOf(snapshot.getChildrenCount()));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
     }
+
 }

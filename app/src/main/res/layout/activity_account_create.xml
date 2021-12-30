@@ -78,6 +78,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="25dp"
                 android:text="Create account"
+                android:textAllCaps="false"
                 android:textColor="@color/black"
                 app:cornerRadius="50dp" />
 

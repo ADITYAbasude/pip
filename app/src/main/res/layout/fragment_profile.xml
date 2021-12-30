@@ -99,7 +99,7 @@
             app:layout_constraintTop_toBottomOf="@+id/UserName" />
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/Follower_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
@@ -197,12 +197,12 @@
                             android:src="@drawable/settinglines" />
 
                         <TextView
-                            android:id="@+id/serttingsAndPrivercy"
+                            android:id="@+id/settingsAndPrivercy"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="30dp"
                             android:paddingLeft="10dp"
-                            android:text="Settings and Privercy"
+                            android:text="Settings and Privacy"
                             android:textColor="@color/black"
                             android:textSize="21dp" />
                     </LinearLayout>

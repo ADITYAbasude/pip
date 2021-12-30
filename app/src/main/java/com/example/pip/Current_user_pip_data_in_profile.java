@@ -3,14 +3,15 @@ package com.example.pip;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -34,7 +35,11 @@ public class Current_user_pip_data_in_profile extends RecyclerView.Adapter<Curre
     boolean like_dislike = false;
     public final DatabaseReference userPipDataRef = FirebaseDatabase.getInstance().getReference("user").child("UserPost").child("UserPipData")
             .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+    MediaPlayer mp;
+
+
     public final DatabaseReference userDataRef = FirebaseDatabase.getInstance().getReference("user").child("UserInfo").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
     String u_id = FirebaseAuth.getInstance().getUid();
 
     public Current_user_pip_data_in_profile(Context context, ArrayList<User> store_user_pip) {
@@ -53,11 +58,36 @@ public class Current_user_pip_data_in_profile extends RecyclerView.Adapter<Curre
 
     @Override
     public void onBindViewHolder(@NonNull MyAdapter holder, int position) {
+
         User user = store_pip_data.get(position);
         holder.userPipName2.setText(user.pipuserName);
         holder.pipDateShow2.setText(user.pipPostData);
+        holder.pipDateAndTime.setText(user.date);
+
 
         likeStatus(user, holder.heart2, holder.heartCount2);
+
+
+
+
+        userPipDataRef.child(user.pip_id).child("ImageUriFromDatabase").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    holder.CurrentUserPipDataImage.setVisibility(View.VISIBLE);
+                    pipDataImageModel ImageModel = snapshot.getValue(pipDataImageModel.class);
+                    Glide.with(context).load(Uri.parse(ImageModel.pipImageData)).into(holder.CurrentUserPipDataImage);
+                } else{
+                    holder.CurrentUserPipDataImage.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
         userDataRef.child("Profile_Image").addValueEventListener(new ValueEventListener() {
             @Override
@@ -79,11 +109,13 @@ public class Current_user_pip_data_in_profile extends RecyclerView.Adapter<Curre
 
         delect_pip_Data(holder.delect, user);
         pip_like_data_store(user, holder.heart2);
+        commentCount(holder.CommentCount2 , user);
 
         holder.comment2.setOnClickListener(view -> {
             Intent moveCommentPage = new Intent(context, userComment.class);
             moveCommentPage.putExtra("userName", holder.userPipName2.getText().toString());
             moveCommentPage.putExtra("pipData", holder.pipDateShow2.getText().toString());
+            moveCommentPage.putExtra("pip_id", user.pip_id);
             context.startActivity(moveCommentPage);
 
         });
@@ -101,12 +133,27 @@ public class Current_user_pip_data_in_profile extends RecyclerView.Adapter<Curre
     }
 
 
+    private  void commentCount(TextView comment_count , User user){
+        userPipDataRef.child(user.pip_id).child("Comments").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                comment_count.setText(String.valueOf((int) snapshot.getChildrenCount()));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
     private void delect_pip_Data(ImageView delect, User user) {
         delect.setOnClickListener(v ->
                 userPipDataRef.child(user.pip_id).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         snapshot.getRef().setValue(null);
+                        notifyDataSetChanged();
                     }
 
                     @Override
@@ -119,33 +166,35 @@ public class Current_user_pip_data_in_profile extends RecyclerView.Adapter<Curre
     }
 
     private void pip_like_data_store(User user, ImageView hert) {
-        hert.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                like_dislike = true;
-                userPipDataRef.child(user.pip_id).child("Likes").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (like_dislike) {
-                            if (snapshot.hasChild(u_id)) {
-                                snapshot.getRef().child(u_id).setValue(null);
-                                hert.setImageResource(R.drawable.heart);
-                                like_dislike = false;
-                            } else {
-                                hert.setImageResource(R.drawable.heartred);
-                                snapshot.getRef().child(u_id).setValue(true);
-                                like_dislike = false;
-                            }
+        hert.setOnClickListener(v -> {
+            like_dislike = true;
+            userPipDataRef.child(user.pip_id).child("Likes").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (like_dislike) {
+                        if (snapshot.hasChild(u_id)) {
+                            snapshot.getRef().child(u_id).setValue(null);
+                            hert.setImageResource(R.drawable.heart);
+                            like_dislike = false;
+                        } else {
+                            hert.setImageResource(R.drawable.heartred);
+                            mp = MediaPlayer.create(context , R.raw.heart_click_sound);
+                            mp.setOnPreparedListener(mp -> {
+                                mp.start();
+                            });
+                            snapshot.getRef().child(u_id).setValue(true);
+                            like_dislike = false;
+
                         }
                     }
+                }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-                    }
-                });
+                }
+            });
 
-            }
         });
 
     }
@@ -160,11 +209,10 @@ public class Current_user_pip_data_in_profile extends RecyclerView.Adapter<Curre
                 if (snapshot.hasChild(u_id)) {
                     heart.setImageResource(R.drawable.heartred);
                     heartCount.setText(Integer.toString((int) snapshot.getChildrenCount()));
-                    Toast.makeText(context, "true", Toast.LENGTH_SHORT).show();
+                    ;
                 } else {
                     heart.setImageResource(R.drawable.heart);
                     heartCount.setText(Integer.toString((int) snapshot.getChildrenCount()));
-                    Toast.makeText(context, "False", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -187,8 +235,8 @@ public class Current_user_pip_data_in_profile extends RecyclerView.Adapter<Curre
 
     public class MyAdapter extends RecyclerView.ViewHolder {
 
-        protected TextView userPipName2, pipDateShow2, heartCount2, CommentCount2;
-        protected ImageView heart2, comment2, share2, User_image, delect;
+        protected TextView userPipName2, pipDateShow2, heartCount2, CommentCount2, pipDateAndTime;
+        protected ImageView heart2, comment2, share2, User_image, delect, CurrentUserPipDataImage;
 
 
         public MyAdapter(@NonNull View itemView) {
@@ -202,6 +250,8 @@ public class Current_user_pip_data_in_profile extends RecyclerView.Adapter<Curre
             share2 = itemView.findViewById(R.id.share2);
             User_image = itemView.findViewById(R.id.userProfileImg2);
             delect = itemView.findViewById(R.id.delect);
+            pipDateAndTime = itemView.findViewById(R.id.pipDateAndTime);
+            CurrentUserPipDataImage = itemView.findViewById(R.id.CurrentUserPipDataImage);
         }
     }
 }

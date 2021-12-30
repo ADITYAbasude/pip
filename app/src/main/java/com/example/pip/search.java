@@ -30,7 +30,7 @@ public class search extends Fragment {
     private EditText searchView;
     private RecyclerView storePipUerName;
     private final DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-    private follow_page gup;
+    private SearchAdapter gup;
     private ProgressBar progressBar;
     private boolean followOrNot;
     private TextView userNotFound;
@@ -60,7 +60,7 @@ public class search extends Fragment {
         userNotFound = view.findViewById(R.id.userNotFound);
 
 
-        gup = new follow_page(getContext(), Store_User_Info);
+        gup = new SearchAdapter(getContext(), Store_User_Info);
         storePipUerName.setLayoutManager(new LinearLayoutManager(getContext()));
 
         storePipUerName.setAdapter(gup);

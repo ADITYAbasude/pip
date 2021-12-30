@@ -69,6 +69,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="100dp"
                 android:text="LogIn"
+                android:textAllCaps="false"
                 android:textColor="@color/black"
                 app:cornerRadius="50dp" />
 

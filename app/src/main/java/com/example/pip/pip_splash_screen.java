@@ -18,14 +18,11 @@ public class pip_splash_screen extends AppCompatActivity {
         ActionBar action = getSupportActionBar();
         action.hide();
 
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent i = new Intent(pip_splash_screen.this , twitpage.class);
-                startActivity(i);
-                finish();
-            }
-        } , 1000);
+        handler.postDelayed(() -> {
+            Intent i = new Intent(pip_splash_screen.this , twitpage.class);
+            startActivity(i);
+            finish();
+        }, 1000);
 
     }
 }

@@ -158,6 +158,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
         if (requestCode == 1 && resultCode == RESULT_OK && data != null) {
             ImageData = data.getData();
             try {
+
                 Bitmap imageBitMap = MediaStore.Images.Media.getBitmap(getContentResolver(), ImageData);
                 setImageOfUser.setImageBitmap(imageBitMap);
 

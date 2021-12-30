@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -41,6 +42,7 @@ public class User_profile_visit extends AppCompatActivity {
     private RecyclerView setUser_pip_data;
     private ArrayList<User> Store_pip_data = new ArrayList<>();
     Current_user_pip_data_in_profile current_user_pip_data_in_profile;
+    boolean notifydata = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +51,7 @@ public class User_profile_visit extends AppCompatActivity {
         ActionBar bar = getSupportActionBar();
         bar.hide();
         Window window = this.getWindow();
-        window.setStatusBarColor(ContextCompat.getColor(this,R.color.gray_light ));
+        window.setStatusBarColor(ContextCompat.getColor(this, R.color.gray_light));
 
 
 //        ---------id declaration ----------------
@@ -62,11 +64,14 @@ public class User_profile_visit extends AppCompatActivity {
         proBar = findViewById(R.id.progressBar3);
         setUser_pip_data = findViewById(R.id.setUser_pip_data);
 
+
         proBar.setVisibility(View.VISIBLE);
         puUserData();
         setUser_data_in_recyclerView();
         proBar.setVisibility(View.GONE);
     }
+
+
     private void puUserData() {
         userDataRef.child("EditedData").addValueEventListener(new ValueEventListener() {
             @Override
@@ -90,6 +95,7 @@ public class User_profile_visit extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
                 putUserName.setText(user.usName);
+
             }
 
             @Override
@@ -117,26 +123,22 @@ public class User_profile_visit extends AppCompatActivity {
     }
 
     private void setUser_data_in_recyclerView() {
-        setUser_pip_data.setHasFixedSize(true);
 
-        current_user_pip_data_in_profile = new Current_user_pip_data_in_profile(this, Store_pip_data );
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setReverseLayout(true);
-        layoutManager.setStackFromEnd(true);
-        setUser_pip_data.setLayoutManager(layoutManager);
-        setUser_pip_data.setAdapter(current_user_pip_data_in_profile);
 
         userPipDataRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Store_pip_data.clear();
-                if (snapshot.exists()){
-                    for (DataSnapshot ds: snapshot.getChildren()){
-                        User user  = ds.getValue(User.class);
+                if (snapshot.exists()) {
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+                        User user = ds.getValue(User.class);
                         Store_pip_data.add(user);
 
                     }
-                    current_user_pip_data_in_profile.notifyDataSetChanged();
+                    if (notifydata == true) {
+                        current_user_pip_data_in_profile.notifyDataSetChanged();
+                        notifydata = false;
+                    }
                 }
             }
 
@@ -146,10 +148,17 @@ public class User_profile_visit extends AppCompatActivity {
             }
         });
 
-
-
-
+        setUser_pip_data.setHasFixedSize(true);
+        current_user_pip_data_in_profile = new Current_user_pip_data_in_profile(this, Store_pip_data);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
+        setUser_pip_data.setLayoutManager(layoutManager);
+        setUser_pip_data.setAdapter(current_user_pip_data_in_profile);
+//        current_user_pip_data_in_profile.
 
 
     }
+
+
 }

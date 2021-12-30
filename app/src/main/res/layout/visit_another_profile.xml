@@ -11,27 +11,35 @@
     android:background="@drawable/search_user_detailed_contains"
     android:elevation="10dp">
 
-    <ImageView
-        android:id="@+id/userProfileImg"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:contentDescription="@string/todo"
+        app:cardCornerRadius="100dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_account_circle_24" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/userProfileImg"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:contentDescription="@string/todo"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/ic_baseline_account_circle_24" />
+    </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/UserNameInPip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
         android:textColor="@color/black"
         android:textSize="15sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/userProfileImg"
+        app:layout_constraintStart_toEndOf="@+id/cardView10"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_max="100dp" />
 
@@ -40,24 +48,38 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:paddingRight="10dp"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/userProfileImg"
-        app:layout_constraintTop_toBottomOf="@+id/UserNameInPip"
-        app:layout_constraintVertical_bias="0.32" />
+        app:layout_constraintStart_toEndOf="@+id/cardView10"
+        app:layout_constraintTop_toBottomOf="@+id/UserNameInPip" />
+
+    <ImageView
+        android:id="@+id/setPipImageData"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/cardView10"
+        app:layout_constraintTop_toBottomOf="@+id/PipPostDate"
+        app:srcCompat="@drawable/ic_baseline_image_24" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_height="20dp"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
         android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/userProfileImg"
-        app:layout_constraintTop_toBottomOf="@+id/PipPostDate">
+        app:layout_constraintStart_toEndOf="@+id/cardView10"
+        app:layout_constraintTop_toBottomOf="@+id/setPipImageData">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -93,10 +115,10 @@
 
             <ImageView
                 android:id="@+id/comment"
-                android:layout_width="17dp"
+                android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginEnd="10dp"
-                android:layout_weight="1"
+                android:layout_weight="0"
                 android:contentDescription="@string/todo"
                 app:srcCompat="@drawable/comment" />
 
@@ -126,4 +148,15 @@
 
         </LinearLayout>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/DateAndTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:textColor="#000000"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,15 +1,12 @@
 package com.example.pip;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.contentcapture.DataShareRequest;
 import android.widget.ProgressBar;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,8 +29,13 @@ public class home extends Fragment {
     private FloatingActionButton addTwitBtn;
     private homePagePipAdapter homePageAdapter;
     private RecyclerView pipShow;
-    private static ArrayList<User> storePipData = new ArrayList<>();
+    private ArrayList<User> storePipData = new ArrayList<>();
+    private ArrayList<String> followerId = new ArrayList<>();
     private ProgressBar progessbar;
+    public final DatabaseReference userPipDataRef = FirebaseDatabase.getInstance().getReference("user").child("UserPost").child("UserPipData");
+    public final DatabaseReference userDataRef = FirebaseDatabase.getInstance().getReference("user").child("UserInfo").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+    private boolean notifyData = true;
+    private TextView errorText;
 
     public home() {
     }
@@ -59,16 +61,20 @@ public class home extends Fragment {
         addTwitBtn = view.findViewById(R.id.floatingActionButtonforTwit);
         pipShow = view.findViewById(R.id.pipShow);
         progessbar = view.findViewById(R.id.progressbar);
+        errorText = view.findViewById(R.id.errorText);
 
+        getAllFollowerId();
 
 //        ------------------recyclerView setup ----------------------
         pipShow.setHasFixedSize(true);
         homePageAdapter = new homePagePipAdapter(getContext(), storePipData);
-        pipShow.setLayoutManager(new LinearLayoutManager(getContext()));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
+        pipShow.setLayoutManager(layoutManager);
         pipShow.setAdapter(homePageAdapter);
 
-//        takePipDataFromFirebase();
-//
+
 //        ----------click on floating btn for twit --------------
 
         addTwitBtn.setOnClickListener(view1 -> {
@@ -81,57 +87,61 @@ public class home extends Fragment {
     }
 
 
-//    private void takePipDataFromFirebase() {
-//        progessbar.setVisibility(View.VISIBLE);
-//        FirebaseDatabase.getInstance().getReference("user").child("UserPost").child("UserPipData")
-//                .addChildEventListener(new ChildEventListener() {
-//                    @Override
-//                    public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-//                        storePipData.clear();
-//                        for (DataSnapshot ds : snapshot.getChildren()) {
-//                            ds.getRef().addValueEventListener(new ValueEventListener() {
-//                                @Override
-//                                public void onDataChange(@NonNull DataSnapshot snapshot2) {
-//                                    for (DataSnapshot ds2 : snapshot2.getChildren()) {
-//                                        User user = ds2.getValue(User.class);
-//                                        storePipData.add(user);
-//                                    }
-//                                    homePageAdapter.notifyDataSetChanged();
-//                                }
-//
-//                                @Override
-//                                public void onCancelled(@NonNull DatabaseError error) {
-//
-//                                }
-//                            });
-//                            Toast.makeText(getContext(), snapshot.getRef().getKey(), Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError error) {
-//
-//                    }
-//                });
-//        progessbar.setVisibility(View.GONE);
-//    }
+    private void getAllFollowerId() {
+        storePipData.clear();
+        progessbar.setVisibility(View.VISIBLE);
+        userDataRef.child("Following").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                followerId.clear();
+                if (snapshot.exists()) {
+                    errorText.setVisibility(View.GONE);
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+                        followerId.add(ds.getKey());
+
+                    }
+                    retrieveData();
+                } else {
+                    errorText.setVisibility(View.VISIBLE);
+                    progessbar.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
 
 
+    private void retrieveData() {
+        storePipData.clear();
+        for (int i = 0; i < followerId.size(); i++) {
+            userPipDataRef.child(followerId.get(i)).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        for (DataSnapshot ds1 : snapshot.getChildren()) {
+                            User user1 = ds1.getValue(User.class);
+                            storePipData.add(user1);
+                        }
+                        if (notifyData) {
+                            homePageAdapter.notifyDataSetChanged();
+                            notifyData = false;
+                        }
+                        progessbar.setVisibility(View.GONE);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+    }
 }
 
 

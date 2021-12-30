@@ -1,21 +1,24 @@
 package com.example.pip;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.auth.FirebaseAuth;
+import com.bumptech.glide.Glide;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
@@ -24,8 +27,9 @@ import java.util.ArrayList;
 public class homePagePipAdapter extends RecyclerView.Adapter<homePagePipAdapter.MyViewAdapter> {
     ArrayList<User> pipDate;
     Context context;
-
-    int countLike;
+    public final DatabaseReference userPipDataRef = FirebaseDatabase.getInstance().getReference("user").child("UserPost").child("UserPipData");
+    public final DatabaseReference userDataRef = FirebaseDatabase.getInstance().getReference("user").child("UserInfo");
+    private String uid ;
 
 
     public homePagePipAdapter(Context context, ArrayList<User> pipDate) {
@@ -37,120 +41,91 @@ public class homePagePipAdapter extends RecyclerView.Adapter<homePagePipAdapter.
     @NonNull
     @Override
     public homePagePipAdapter.MyViewAdapter onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(context).inflate(R.layout.homepagetoseepip, parent, false);
+        View v = LayoutInflater.from(context).inflate(R.layout.home_page_recycler, parent, false);
         return new MyViewAdapter(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull homePagePipAdapter.MyViewAdapter holder, int position) {
         User user = pipDate.get(position);
-        ImageView heart = holder.heart;
-
         holder.userPipName.setText(user.pipuserName);
         holder.pipDateShow.setText(user.pipPostData);
-        holder.heartCount.setText(user.like);
-
-
-//        countTheComments(holder.CommentCount, user);
+        holder.setDate.setText(user.date);
 //
+        userDataRef.orderByChild("usName").equalTo(user.pipuserName).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                uid = snapshot.getRef().getKey();
 
-        heart.setOnClickListener(view -> {
+                setPipImage(uid, user, holder.setPipImageData);
+                snapshot.getRef().child("Profile_Image").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        User user1 = snapshot.getValue(User.class);
+                        Glide.with(context).load(Uri.parse(user1.User_Profile_Image_Uri)).into(holder.setUserImage);
+                    }
 
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                    }
+                });
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
         });
-
-
-        holder.comment.setOnClickListener(view -> {
-            Intent moveCommentPage = new Intent(context, userComment.class);
-            moveCommentPage.putExtra("userName", holder.userPipName.getText().toString());
-            moveCommentPage.putExtra("pipData", holder.pipDateShow.getText().toString());
-            context.startActivity(moveCommentPage);
-
-        });
-
-        holder.share.setOnClickListener(view -> {
-            Intent share = new Intent();
-            share.setAction(Intent.ACTION_SEND);
-            share.putExtra(Intent.EXTRA_TEXT, holder.pipDateShow.getText().toString());
-            share.setType("text/plain");
-            Intent shareIntent = Intent.createChooser(share, "Pip Post");
-            context.startActivity(shareIntent);
-        });
-
-
+        recyclerClickView(holder.setClick , user);
     }
-//
-//    private void countTheComments(TextView commentCount, User user) {
-//
-//        FirebaseDatabase.getInstance().getReference("user").child("All-User-Pip-Data").addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                for (DataSnapshot ds : snapshot.getChildren()) {
-//                    ds.getRef().child("comment").orderByChild("pipPostData").equalTo(user.pipPostData).addValueEventListener(new ValueEventListener() {
-//                        @Override
-//                        public void onDataChange(@NonNull DataSnapshot snapshot2) {
-//                            int countcomment = (int) snapshot2.getChildrenCount();
-//                            commentCount.setText(countcomment + "");
-//                        }
-//
-//                        @Override
-//                        public void onCancelled(@NonNull DatabaseError error) {
-//
-//                        }
-//                    });
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//
-////        commentCount.setText("88");
-//    }
-//
-//    private void likeMinesMines(User user) {
-//        FirebaseDatabase.getInstance().getReference("user").child("All-User-Pip-Data").orderByChild("pipPostData")
-//                .equalTo(user.pipPostData)
-//                .addListenerForSingleValueEvent(new ValueEventListener() {
-//                    @SuppressLint("NotifyDataSetChanged")
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                        for (DataSnapshot ds : snapshot.getChildren()) {
-//                            ds.getRef().child("like").setValue(String.valueOf(countLike));
-//                        }
-//                        notifyDataSetChanged();
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError error) {
-//
-//                    }
-//                });
-//    }
-//
-//    private void likePlusPlus(User user) {
-//        FirebaseDatabase.getInstance().getReference("user").child("All-User-Pip-Data").orderByChild("pipPostData")
-//                .equalTo(user.pipPostData)
-//                .addListenerForSingleValueEvent(new ValueEventListener() {
-//                    @SuppressLint("NotifyDataSetChanged")
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                        for (DataSnapshot ds : snapshot.getChildren()) {
-//                            ds.getRef().child("like").setValue(String.valueOf(countLike));
-//                        }
-//                        notifyDataSetChanged();
-//
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError error) {
-//
-//                    }
-//                });
-//
-//    }
 
+    public void recyclerClickView(ConstraintLayout setClick , User user){
+        setClick.setOnClickListener(v -> {
+            Intent  intent = new Intent(context, pip_view.class);
+            intent.putExtra("pip_id" , user.pip_id);
+            intent.putExtra("name" , user.pipuserName);
+            context.startActivity(intent);
+        });
+    }
+
+
+
+    private void setPipImage(String uid, User user, ImageView setPipImageData) {
+        userPipDataRef.child(uid).child(user.pip_id).child("ImageUriFromDatabase").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    setPipImageData.setVisibility(View.VISIBLE);
+                    pipDataImageModel imageModel = snapshot.getValue(pipDataImageModel.class);
+                    Glide.with(context).load(Uri.parse(imageModel.pipImageData)).into(setPipImageData);
+                } else {
+                    setPipImageData.setImageResource(R.drawable.ic_baseline_home_24);
+                    setPipImageData.setVisibility(View.GONE);
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 
     @Override
     public int getItemCount() {
@@ -159,24 +134,19 @@ public class homePagePipAdapter extends RecyclerView.Adapter<homePagePipAdapter.
 
     public static class MyViewAdapter extends RecyclerView.ViewHolder {
 
-        TextView userPipName, pipDateShow, heartCount, CommentCount;
-        ImageView heart, comment, share;
-        String likeCount;
-        int parseInIntegerLikeCount;
-        boolean checkLikeOrNot = true;
+        TextView userPipName, pipDateShow, setDate;
+        ImageView setUserImage, setPipImageData;
+        ConstraintLayout setClick;
 
         public MyViewAdapter(@NonNull View itemView) {
             super(itemView);
 
-            userPipName = itemView.findViewById(R.id.UserNameInPip);
-            pipDateShow = itemView.findViewById(R.id.PipPostDate);
-            heart = itemView.findViewById(R.id.heart);
-            comment = itemView.findViewById(R.id.comment);
-            heartCount = itemView.findViewById(R.id.heartCount);
-            CommentCount = itemView.findViewById(R.id.commentCount);
-            share = itemView.findViewById(R.id.share);
-
-
+            userPipName = itemView.findViewById(R.id.name);
+            pipDateShow = itemView.findViewById(R.id.pip);
+            setUserImage = itemView.findViewById(R.id.photo);
+            setPipImageData = itemView.findViewById(R.id.setImage);
+            setDate = itemView.findViewById(R.id.dateTime3);
+            setClick = itemView.findViewById(R.id.setClick);
         }
 
 
