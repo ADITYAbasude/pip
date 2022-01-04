@@ -102,8 +102,11 @@ public class userComment extends AppCompatActivity {
         userDataRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Profile_Image").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                User user = snapshot.getValue(User.class);
-                ImageUri = user.User_Profile_Image_Uri;
+
+                if (snapshot.exists()){
+                    User user = snapshot.getValue(User.class);
+                    ImageUri = user.User_Profile_Image_Uri;
+                }
             }
 
             @Override

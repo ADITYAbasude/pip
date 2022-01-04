@@ -12,12 +12,13 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/pip_show_ui_for_profile"
         android:elevation="10dp"
+        android:paddingBottom="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -69,42 +70,78 @@
             app:layout_constraintTop_toBottomOf="@+id/setUserNameInAnotherProfile"
             app:layout_constraintWidth_max="200dp" />
 
+        <ImageView
+            android:id="@+id/locationImage"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView9"
+            app:srcCompat="@drawable/ic_baseline_location_on_24" />
+
         <TextView
             android:id="@+id/setUserLocationInAnotherProfile"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_height="15dp"
+            android:layout_marginStart="2dp"
             android:layout_marginTop="16dp"
-            android:drawableLeft="@drawable/ic_baseline_location_on_24"
-            android:drawablePadding="5dp"
+            android:textAlignment="center"
             android:textColor="#000000"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="12sp"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@+id/locationImage"
             app:layout_constraintTop_toBottomOf="@+id/cardView9" />
+
+        <ImageView
+            android:id="@+id/webImage"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/locationImage"
+            app:srcCompat="@drawable/ic_baseline_web_24" />
 
         <TextView
             android:id="@+id/setUserWebsiteInAnotherProfile"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="15dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="8dp"
+            android:drawablePadding="5dp"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="12sp"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@+id/webImage"
+            app:layout_constraintTop_toBottomOf="@+id/setUserLocationInAnotherProfile" />
+
+        <ImageView
+            android:id="@+id/dobImage"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:drawableLeft="@drawable/ic_baseline_web_24"
-            android:drawablePadding="5dp"
-            android:textColor="#000000"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/setUserLocationInAnotherProfile" />
+            app:layout_constraintTop_toBottomOf="@+id/webImage"
+            app:srcCompat="@drawable/ic_baseline_calendar_today_24" />
 
         <TextView
             android:id="@+id/setUserDOBInAnotherProfile"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_height="15dp"
+            android:layout_marginStart="2dp"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:drawableLeft="@drawable/ic_baseline_calendar_today_24"
             android:drawablePadding="5dp"
+            android:textAlignment="center"
             android:textColor="#000000"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="12sp"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@+id/dobImage"
             app:layout_constraintTop_toBottomOf="@+id/setUserWebsiteInAnotherProfile" />
 
         <Button
@@ -112,13 +149,78 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="8dp"
             android:background="@drawable/btn_with_roundborders"
             android:text="Follow"
             android:textAllCaps="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             tools:ignore="TouchTargetSizeCheck" />
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="1dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintStart_toEndOf="@+id/followingClick"
+            app:layout_constraintTop_toBottomOf="@+id/dobImage" />
+
+        <LinearLayout
+            android:id="@+id/followingClick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dobImage">
+
+            <TextView
+                android:id="@+id/fingCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="0"
+                android:textColor="#000000"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Following"
+                android:textColor="#000000" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/followerClcik"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/divider2"
+            app:layout_constraintTop_toBottomOf="@+id/dobImage">
+
+            <TextView
+                android:id="@+id/fwerCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="0"
+                android:textColor="#000000"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Follower"
+                android:textColor="#000000" />
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -132,6 +234,8 @@
         android:elevation="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
+        app:layout_constraintVertical_bias="1.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

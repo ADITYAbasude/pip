@@ -29,7 +29,7 @@ public class homePagePipAdapter extends RecyclerView.Adapter<homePagePipAdapter.
     Context context;
     public final DatabaseReference userPipDataRef = FirebaseDatabase.getInstance().getReference("user").child("UserPost").child("UserPipData");
     public final DatabaseReference userDataRef = FirebaseDatabase.getInstance().getReference("user").child("UserInfo");
-    private String uid ;
+    private String uid;
 
 
     public homePagePipAdapter(Context context, ArrayList<User> pipDate) {
@@ -61,8 +61,12 @@ public class homePagePipAdapter extends RecyclerView.Adapter<homePagePipAdapter.
                 snapshot.getRef().child("Profile_Image").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        User user1 = snapshot.getValue(User.class);
-                        Glide.with(context).load(Uri.parse(user1.User_Profile_Image_Uri)).into(holder.setUserImage);
+                        if (snapshot.exists()) {
+                            User user1 = snapshot.getValue(User.class);
+                            Glide.with(context).load(Uri.parse(user1.User_Profile_Image_Uri)).into(holder.setUserImage);
+                        } else {
+                            holder.setUserImage.setImageResource(R.drawable.ic_baseline_account_circle_24);
+                        }
                     }
 
                     @Override
@@ -91,18 +95,17 @@ public class homePagePipAdapter extends RecyclerView.Adapter<homePagePipAdapter.
 
             }
         });
-        recyclerClickView(holder.setClick , user);
+        recyclerClickView(holder.setClick, user);
     }
 
-    public void recyclerClickView(ConstraintLayout setClick , User user){
+    public void recyclerClickView(ConstraintLayout setClick, User user) {
         setClick.setOnClickListener(v -> {
-            Intent  intent = new Intent(context, pip_view.class);
-            intent.putExtra("pip_id" , user.pip_id);
-            intent.putExtra("name" , user.pipuserName);
+            Intent intent = new Intent(context, pip_view.class);
+            intent.putExtra("pip_id", user.pip_id);
+            intent.putExtra("name", user.pipuserName);
             context.startActivity(intent);
         });
     }
-
 
 
     private void setPipImage(String uid, User user, ImageView setPipImageData) {

@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,6 +21,7 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,7 +32,7 @@ import com.google.firebase.database.ValueEventListener;
 public class profile extends Fragment {
 
 
-    private TextView UserName, logout, editProfile, followingCount , profileTextBtn , Follower_count , settingAndPrivacy;
+    private TextView UserName, logout, editProfile, profileTextBtn, settingAndPrivacy;
     private DatabaseReference ref;
     private ImageView profileimg;
     private final DatabaseReference firebaseRef = FirebaseDatabase.getInstance().getReference("user")
@@ -39,6 +41,7 @@ public class profile extends Fragment {
             .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
     private static Uri take_uri;
     private ProgressBar ProfileStatus;
+    FirebaseUser uAuth = FirebaseAuth.getInstance().getCurrentUser();
 
     public profile() {
     }
@@ -67,62 +70,68 @@ public class profile extends Fragment {
         logout = view.findViewById(R.id.logout);
         editProfile = view.findViewById(R.id.editProfile);
         ProfileStatus = view.findViewById(R.id.progressBarstatus);
-        followingCount = view.findViewById(R.id.following_number);
         profileTextBtn = view.findViewById(R.id.profileTextBtn);
-        Follower_count = view.findViewById(R.id.Follower_count);
         settingAndPrivacy = view.findViewById(R.id.settingsAndPrivercy);
 
 //        name taking from database
-        ref = FirebaseDatabase.getInstance().getReference();
-        ref.child("user").child("UserInfo").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        User userprofile = snapshot.getValue(User.class);
-                        String usernamesertext = userprofile.usName;
-                        SharedPreferences sp = getContext().getSharedPreferences("username", MODE_PRIVATE);
-                        SharedPreferences.Editor editsp = sp.edit();
-                        editsp.putString("name", usernamesertext);
-                        editsp.apply();
-                        UserName.setText(usernamesertext);
-                    }
+        if (uAuth != null) {
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+            ref = FirebaseDatabase.getInstance().getReference();
+            ref.child("user").child("UserInfo").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            User userprofile = snapshot.getValue(User.class);
+                            String usernamesertext = userprofile.usName;
+                            SharedPreferences sp = getContext().getSharedPreferences("username", MODE_PRIVATE);
+                            SharedPreferences.Editor editsp = sp.edit();
+                            editsp.putString("name", usernamesertext);
+                            editsp.apply();
+                            UserName.setText(usernamesertext);
+                        }
 
-                    }
-                });
-        SharedPreferences sp2 = getContext().getSharedPreferences("username", MODE_PRIVATE);
-        String takeNamefromSP = sp2.getString("name", " ");
-        UserName.setText(takeNamefromSP);
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+            SharedPreferences sp2 = getContext().getSharedPreferences("username", MODE_PRIVATE);
+            String takeNamefromSP = sp2.getString("name", " ");
+            UserName.setText(takeNamefromSP);
 
 
 //----------------------logout function-------------------
-        logoutfuc();
+            logoutfuc();
 
 
 //        ----------------editProfile---------------------
-        editProfileClick();
+            editProfileClick();
 
 
-        pickImage_uri_fromFirebase();
-        setImage();
+            pickImage_uri_fromFirebase();
+            setImage();
 
 
 //        ---------Following count-------------
 
-        count_following();
+//            count_following();
 
 //        ------------setting page -----------------
-        invokeSettingAndPrivacy();
+            invokeSettingAndPrivacy();
 
 //        ----------profile_vist-----
-        profileTextBtn.setOnClickListener(v -> {
-            Intent move_to_profile_page = new Intent(getContext() , User_profile_visit.class);
-            startActivity(move_to_profile_page);
-        });
-    }
+            profileTextBtn.setOnClickListener(v -> {
+                Intent move_to_profile_page = new Intent(getContext(), User_profile_visit.class);
+                startActivity(move_to_profile_page);
+            });
+        } else {
+            Intent intent = new Intent(getContext(), account.class);
+            Toast.makeText(getContext(), "Successfully", Toast.LENGTH_SHORT).show();
+            startActivity(intent);
+            getActivity().finish();
 
+        }
+    }
 
 
     //-------------------------logout option function for user -----------------
@@ -186,42 +195,42 @@ public class profile extends Fragment {
         });
     }
 
-    private void invokeSettingAndPrivacy(){
+    private void invokeSettingAndPrivacy() {
         settingAndPrivacy.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext() , settingsAnsPrivercy.class);
+            Intent intent = new Intent(getContext(), settingsAnsPrivercy.class);
             startActivity(intent);
         });
     }
 
-    private void count_following() {
-        followingChild_ref.child("Following").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    followingCount.setText(String.valueOf(snapshot.getChildrenCount()));
-                }
-            }
+//    private void count_following() {
+//        followingChild_ref.child("Following").addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                if (snapshot.exists()) {
+//                    followingCount.setText(String.valueOf(snapshot.getChildrenCount()));
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//
+//        followingChild_ref.child("Follower").addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                if (snapshot.exists()) {
+//                    Follower_count.setText(String.valueOf(snapshot.getChildrenCount()));
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-        followingChild_ref.child("Follower").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    Follower_count.setText(String.valueOf(snapshot.getChildrenCount()));
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-    }
+//    }
 
 }

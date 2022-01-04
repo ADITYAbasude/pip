@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -62,8 +63,13 @@ public class home extends Fragment {
         pipShow = view.findViewById(R.id.pipShow);
         progessbar = view.findViewById(R.id.progressbar);
         errorText = view.findViewById(R.id.errorText);
-
-        getAllFollowerId();
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            Intent intent = new Intent(getContext(), account.class);
+            startActivity(intent);
+            getActivity().finish();
+        } else {
+            getAllFollowerId();
+        }
 
 //        ------------------recyclerView setup ----------------------
         pipShow.setHasFixedSize(true);
@@ -95,16 +101,17 @@ public class home extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 followerId.clear();
                 if (snapshot.exists()) {
-                    errorText.setVisibility(View.GONE);
+
                     for (DataSnapshot ds : snapshot.getChildren()) {
                         followerId.add(ds.getKey());
-
                     }
-                    retrieveData();
                 } else {
                     errorText.setVisibility(View.VISIBLE);
                     progessbar.setVisibility(View.GONE);
                 }
+                followerId.add(FirebaseAuth.getInstance().getUid());
+                retrieveData();
+
             }
 
             @Override
@@ -132,6 +139,7 @@ public class home extends Fragment {
                             notifyData = false;
                         }
                         progessbar.setVisibility(View.GONE);
+                        errorText.setVisibility(View.GONE);
                     }
                 }
 

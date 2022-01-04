@@ -49,6 +49,7 @@
         <entry key="..\:/pip/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.17051282051282052" />
         <entry key="..\:/pip/app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.17051282051282052" />
         <entry key="..\:/pip/app/src/main/res/drawable/ic_launcher_background.xml" value="0.17051282051282052" />
+        <entry key="..\:/pip/app/src/main/res/drawable/layout_with_border.xml" value="0.16835443037974684" />
         <entry key="..\:/pip/app/src/main/res/drawable/nav_ui.xml" value="0.16835443037974684" />
         <entry key="..\:/pip/app/src/main/res/drawable/pip_show_ui_for_profile.xml" value="0.17051282051282052" />
         <entry key="..\:/pip/app/src/main/res/drawable/profile_ui.xml" value="0.16835443037974684" />
@@ -57,23 +58,29 @@
         <entry key="..\:/pip/app/src/main/res/layout/aboutapp.xml" value="0.33" />
         <entry key="..\:/pip/app/src/main/res/layout/activity_account_create.xml" value="0.16" />
         <entry key="..\:/pip/app/src/main/res/layout/activity_comment.xml" value="0.1" />
+        <entry key="..\:/pip/app/src/main/res/layout/activity_following_follower_another_profile.xml" value="0.15683760683760684" />
         <entry key="..\:/pip/app/src/main/res/layout/activity_login.xml" value="0.15726495726495726" />
         <entry key="..\:/pip/app/src/main/res/layout/activity_main.xml" value="0.16" />
         <entry key="..\:/pip/app/src/main/res/layout/activity_pip_splash_screen.xml" value="0.15726495726495726" />
         <entry key="..\:/pip/app/src/main/res/layout/activity_twitpage.xml" value="0.15081521739130435" />
         <entry key="..\:/pip/app/src/main/res/layout/activity_twittingpage_user.xml" value="0.22" />
-        <entry key="..\:/pip/app/src/main/res/layout/activity_user_profile_visit.xml" value="0.38253638253638256" />
-        <entry key="..\:/pip/app/src/main/res/layout/activity_visit_another_profile.xml" value="0.33" />
-        <entry key="..\:/pip/app/src/main/res/layout/edit_user_profile.xml" value="0.18" />
+        <entry key="..\:/pip/app/src/main/res/layout/activity_user_profile_visit.xml" value="0.5" />
+        <entry key="..\:/pip/app/src/main/res/layout/activity_visit_another_profile.xml" value="0.67" />
+        <entry key="..\:/pip/app/src/main/res/layout/edit_user_profile.xml" value="0.33" />
         <entry key="..\:/pip/app/src/main/res/layout/feedback.xml" value="0.25" />
+        <entry key="..\:/pip/app/src/main/res/layout/following_follower_activity.xml" value="0.25" />
+        <entry key="..\:/pip/app/src/main/res/layout/following_fragment_activity.xml" value="0.23469387755102042" />
+        <entry key="..\:/pip/app/src/main/res/layout/fragment_blank.xml" value="0.15726495726495726" />
+        <entry key="..\:/pip/app/src/main/res/layout/fragment_ff_fragment.xml" value="0.15726495726495726" />
+        <entry key="..\:/pip/app/src/main/res/layout/fragment_follower_fragment.xml" value="0.15726495726495726" />
         <entry key="..\:/pip/app/src/main/res/layout/fragment_home.xml" value="0.15081521739130435" />
-        <entry key="..\:/pip/app/src/main/res/layout/fragment_profile.xml" value="0.5672009864364982" />
+        <entry key="..\:/pip/app/src/main/res/layout/fragment_profile.xml" value="0.2" />
         <entry key="..\:/pip/app/src/main/res/layout/fragment_search.xml" value="0.23469387755102042" />
         <entry key="..\:/pip/app/src/main/res/layout/home_page_recycler.xml" value="0.33" />
         <entry key="..\:/pip/app/src/main/res/layout/homepagetoseepip.xml" value="0.5" />
         <entry key="..\:/pip/app/src/main/res/layout/pip_splash_screen.xml" value="0.15726495726495726" />
         <entry key="..\:/pip/app/src/main/res/layout/pip_view.xml" value="0.25" />
-        <entry key="..\:/pip/app/src/main/res/layout/pipusername.xml" value="0.5" />
+        <entry key="..\:/pip/app/src/main/res/layout/pipusername.xml" value="0.33" />
         <entry key="..\:/pip/app/src/main/res/layout/profile_user_pip_data_structure.xml" value="0.33" />
         <entry key="..\:/pip/app/src/main/res/layout/settings_ans_privercy.xml" value="0.22" />
         <entry key="..\:/pip/app/src/main/res/layout/showcomments.xml" value="0.33" />

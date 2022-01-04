@@ -6,9 +6,12 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,6 +23,7 @@ import androidx.core.content.ContextCompat;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -41,7 +45,8 @@ public class EditUserProfileActivity extends AppCompatActivity {
     private String bio, name, location, website, dateOfBirth;
     private ImageView setImageOfUser;
     private static Uri ImageData, take_uri;
-
+    private ProgressBar editText_progressBar;
+    private TextView removeImage;
     String userInfo = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
     private final DatabaseReference firebaseRef = FirebaseDatabase.getInstance().getReference("user")
@@ -65,10 +70,19 @@ public class EditUserProfileActivity extends AppCompatActivity {
         datePicker = findViewById(R.id.datePicker);
         saveChanges = findViewById(R.id.saveChanges);
         setImageOfUser = findViewById(R.id.setImageOfUser);
+        editText_progressBar = findViewById(R.id.editText_progressBar);
+        View v2 = findViewById(R.id.conID);
+        removeImage = findViewById(R.id.remove_img);
 
         datePicker.setOnClickListener(v -> datePickerFunctionInvoked());
 
+        removeImage.setOnClickListener(v -> {
+            firebaseRef.setValue(null);
+        });
+
+
         saveChanges.setOnClickListener(v -> {
+            editText_progressBar.setVisibility(View.VISIBLE);
             name = UserName.getText().toString();
             bio = UserBio.getText().toString();
             location = UserLocation.getText().toString();
@@ -86,13 +100,16 @@ public class EditUserProfileActivity extends AppCompatActivity {
                         }
                     });
 
-//
-            User user = new User(bio, location, website, dateOfBirth, "Null");
+
+            User user = new User(bio, location, website, dateOfBirth);
             FirebaseDatabase.getInstance().getReference("user").child("UserInfo").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                     .child("EditedData").setValue(user);
 
-
-            uploadImage(ImageData);
+            if (ImageData != null) {
+                uploadImage(ImageData);
+            }
+            editText_progressBar.setVisibility(View.GONE);
+            Snackbar.make(v2 , "Successful" , Snackbar.LENGTH_LONG).show();
 
         });
 
@@ -158,14 +175,11 @@ public class EditUserProfileActivity extends AppCompatActivity {
         if (requestCode == 1 && resultCode == RESULT_OK && data != null) {
             ImageData = data.getData();
             try {
-
                 Bitmap imageBitMap = MediaStore.Images.Media.getBitmap(getContentResolver(), ImageData);
                 setImageOfUser.setImageBitmap(imageBitMap);
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }
     }
 

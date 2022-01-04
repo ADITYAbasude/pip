@@ -13,18 +13,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Twitter">
         <activity
+            android:name=".following_follower_AnotherProfile"
+            android:exported="true"
+            android:parentActivityName=".twitpage"/>
+        <activity
+            android:name=".Following_Follower_Activity"
+            android:exported="true"
+            android:parentActivityName=".User_profile_visit" />
+        <activity
             android:name=".pip_view"
             android:exported="true"
             android:parentActivityName=".twitpage" />
         <activity
             android:name=".aboutapp"
             android:exported="true"
-            android:parentActivityName=".settingsAnsPrivercy"/>
+            android:parentActivityName=".settingsAnsPrivercy" />
         <activity
             android:name=".feedback"
             android:exported="true"
-            android:parentActivityName=".settingsAnsPrivercy"/>
-
+            android:parentActivityName=".settingsAnsPrivercy" />
         <activity
             android:name=".settingsAnsPrivercy"
             android:exported="false" />
@@ -33,18 +40,17 @@
             android:exported="false" />
         <activity
             android:name=".User_profile_visit"
-            android:exported="false" />
+            android:exported="true"
+            android:parentActivityName=".twitpage"/>
         <activity
             android:name=".pip_splash_screen"
             android:exported="false" />
         <activity
             android:name=".EditUserProfileActivity"
-            android:exported="false"
-            android:parentActivityName=".twitpage" />
+            android:exported="true" />
         <activity
             android:name=".userComment"
-            android:exported="false"
-            android:parentActivityName=".twitpage" />
+            android:exported="false" />
         <activity
             android:name=".twittingpageUser"
             android:exported="false" />

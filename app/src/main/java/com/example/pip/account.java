@@ -30,8 +30,6 @@ public class account extends AppCompatActivity {
         createAccount = findViewById(R.id.createAccount);
         auth = FirebaseAuth.getInstance();
 
-        Handler handler = new Handler();
-
         Dexter.withContext(this)
                 .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
                 .withListener(new PermissionListener() {

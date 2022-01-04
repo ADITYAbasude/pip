@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.renderscript.ScriptGroup;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,8 +35,10 @@ import java.util.ArrayList;
 
 public class Visit_Another_profile extends AppCompatActivity {
 
-    private ImageView setUserImageInAnotherProfile;
-    private TextView putUserNameInAnotherProfile, putUserBioInAnotherProfile, putUserLocationInAnotherProfile, putUserWebsiteInAnotherProfile, putUserDOBInAnotherProfile;
+    private ImageView setUserImageInAnotherProfile, webImage, dobImage, locationImage;
+    private TextView putUserNameInAnotherProfile, putUserBioInAnotherProfile,
+            putUserLocationInAnotherProfile, putUserWebsiteInAnotherProfile, putUserDOBInAnotherProfile,
+            fingCount, fwerCount;
     private final DatabaseReference userDataRef = FirebaseDatabase.getInstance().getReference("user").child("UserInfo");
     private final DatabaseReference userPipDataRef = FirebaseDatabase.getInstance().getReference("user").child("UserPost").child("UserPipData");
     private RecyclerView setAnotherUserPipData;
@@ -63,6 +67,12 @@ public class Visit_Another_profile extends AppCompatActivity {
         setUserImageInAnotherProfile = findViewById(R.id.setUserImageInAnotherProfile);
         setAnotherUserPipData = findViewById(R.id.setAnotherUserPipData);
         DoFollow_Unfollow = findViewById(R.id.DoFollowOrUnfollow);
+        fingCount = findViewById(R.id.fingCount);
+        fwerCount = findViewById(R.id.fwerCount);
+        webImage = findViewById(R.id.webImage);
+        locationImage = findViewById(R.id.locationImage);
+        dobImage = findViewById(R.id.dobImage);
+
 
         Bundle b = getIntent().getExtras();
         u_id = b.getString("Uid");
@@ -82,6 +92,33 @@ public class Visit_Another_profile extends AppCompatActivity {
                         putUserData(takeUserId);
                         setUser_data_in_recyclerView(takeUserId);
                         checkStatus(takeUserId);
+
+
+                        userDataRef.child(takeUserId).child("Following").addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                fingCount.setText(String.valueOf(snapshot.getChildrenCount()));
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
+                        userDataRef.child(takeUserId).child("Follower").addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                fwerCount.setText(String.valueOf(snapshot.getChildrenCount()));
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
+
                     }
 
                     @Override
@@ -105,6 +142,7 @@ public class Visit_Another_profile extends AppCompatActivity {
                     }
                 });
 
+
     }
 
     private void putUserData(String takeUserId) {
@@ -125,6 +163,61 @@ public class Visit_Another_profile extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+
+        if (putUserLocationInAnotherProfile.getText().toString() != null) {
+            locationImage.setVisibility(View.VISIBLE);
+            putUserLocationInAnotherProfile.setVisibility(View.VISIBLE);
+            if (putUserWebsiteInAnotherProfile.getText().toString() != null) {
+                webImage.setVisibility(View.VISIBLE);
+                putUserWebsiteInAnotherProfile.setVisibility(View.VISIBLE);
+                if (putUserDOBInAnotherProfile.getText().toString() != null) {
+                    dobImage.setVisibility(View.VISIBLE);
+                    putUserDOBInAnotherProfile.setVisibility(View.VISIBLE);
+                }
+            } else if (putUserDOBInAnotherProfile.getText().toString() != null) {
+                dobImage.setVisibility(View.VISIBLE);
+                putUserDOBInAnotherProfile.setVisibility(View.VISIBLE);
+            }
+        }
+
+
+        if (putUserWebsiteInAnotherProfile.getText().toString() != null) {
+            webImage.setVisibility(View.VISIBLE);
+            putUserWebsiteInAnotherProfile.setVisibility(View.VISIBLE);
+            if (putUserLocationInAnotherProfile.getText().toString() != null) {
+                locationImage.setVisibility(View.VISIBLE);
+                putUserLocationInAnotherProfile.setVisibility(View.VISIBLE);
+                if (putUserDOBInAnotherProfile.getText().toString() != null) {
+                    dobImage.setVisibility(View.VISIBLE);
+                    putUserDOBInAnotherProfile.setVisibility(View.VISIBLE);
+                }
+            }
+            else if (putUserDOBInAnotherProfile.getText().toString() != null) {
+                dobImage.setVisibility(View.VISIBLE);
+                putUserDOBInAnotherProfile.setVisibility(View.VISIBLE);
+            }
+        }
+
+        if (putUserDOBInAnotherProfile.getText().toString() != null) {
+            dobImage.setVisibility(View.VISIBLE);
+            putUserDOBInAnotherProfile.setVisibility(View.VISIBLE);
+            if (putUserLocationInAnotherProfile.getText().toString() != null) {
+                locationImage.setVisibility(View.VISIBLE);
+                putUserLocationInAnotherProfile.setVisibility(View.VISIBLE);
+                if (putUserWebsiteInAnotherProfile.getText().toString() != null) {
+                    webImage.setVisibility(View.VISIBLE);
+                    putUserWebsiteInAnotherProfile.setVisibility(View.VISIBLE);
+                }
+            } else if (putUserWebsiteInAnotherProfile.getText().toString() != null) {
+                webImage.setVisibility(View.VISIBLE);
+                putUserWebsiteInAnotherProfile.setVisibility(View.VISIBLE);
+            }
+        }
+
+
+
+
+
         userDataRef.child(takeUserId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

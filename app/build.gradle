@@ -28,6 +28,13 @@ android {
     buildFeatures {
         viewBinding true
     }
+    sourceSets {
+        main {
+            java {
+                srcDirs 'src\\main\\java', 'src\\main\\java\\com.example.pip\\adapters', 'src\\main\\java\\com\\example\\pip\\adapter'
+            }
+        }
+    }
 }
 
 dependencies {
