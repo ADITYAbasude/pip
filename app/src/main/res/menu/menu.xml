@@ -12,6 +12,6 @@
         android:title="@string/title_search" />
     <item
         android:id="@+id/profile"
-        android:icon="@drawable/ic_baseline_account_circle_24"
+        android:icon="@drawable/usermodel"
         android:title="@string/title_profile" />
 </menu>

@@ -6,17 +6,17 @@
     app:startDestination="@id/home2">
     <fragment
         android:id="@+id/home2"
-        android:name="com.example.pip.home"
+        android:name="com.example.pip.screens.HomePostScreen"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/search"
-        android:name="com.example.pip.search"
+        android:name="com.example.pip.fragments.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" />
     <fragment
         android:id="@+id/profile"
-        android:name="com.example.pip.profile"
+        android:name="com.example.pip.fragments.UserFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
 </navigation>

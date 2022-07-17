@@ -13,12 +13,13 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Html;
 
+import com.example.pip.Adapters.StateAdapter;
 import com.google.android.material.tabs.TabLayout;
 
 public class following_follower_AnotherProfile extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager2 pager2;
-    private ff_fragment_Adapter adapter;
+    private StateAdapter adapter;
     private String userName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +31,7 @@ public class following_follower_AnotherProfile extends AppCompatActivity {
         ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#ffffff"));
         bar.setBackgroundDrawable(colorDrawable);
         bar.setDisplayHomeAsUpEnabled(true);
-        final Drawable upArrow =  ContextCompat.getDrawable(this, R.drawable.ic_baseline_arrow_back_ios_24);
+        final Drawable upArrow =  ContextCompat.getDrawable(this, R.drawable.arrow_back);
         upArrow.setColorFilter(ContextCompat.getColor(this, R.color.black), PorterDuff.Mode.SRC_ATOP);
         bar.setHomeAsUpIndicator(upArrow);
         bar.setElevation(5);
@@ -44,7 +45,7 @@ public class following_follower_AnotherProfile extends AppCompatActivity {
         pager2 = findViewById(R.id.pager2);
 
         FragmentManager fm = getSupportFragmentManager();
-        adapter = new ff_fragment_Adapter(fm , getLifecycle());
+        adapter = new StateAdapter(fm , getLifecycle());
         pager2.setAdapter(adapter);
 
 

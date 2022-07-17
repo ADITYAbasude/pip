@@ -5,7 +5,7 @@
     android:id="@+id/conID"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EditUserProfileActivity">
+    tools:context=".screens.EditUserProfileScreen">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -43,7 +43,7 @@
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/ic_baseline_account_circle_24" />
+                        android:src="@drawable/usermodel" />
 
                 </androidx.cardview.widget.CardView>
 

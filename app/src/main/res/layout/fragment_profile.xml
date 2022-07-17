@@ -5,7 +5,7 @@
     android:id="@+id/profileFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".profile">
+    tools:context=".fragments.UserFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -27,7 +27,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_baseline_account_circle_24" />
+                android:src="@drawable/usermodel"
+                app:srcCompat="@drawable/usermodel" />
 
         </androidx.cardview.widget.CardView>
 
@@ -89,7 +90,7 @@
                             android:layout_marginTop="55dp"
                             android:layout_weight="0"
                             android:paddingLeft="30dp"
-                            android:src="@drawable/user" />
+                            android:src="@drawable/usermodel" />
 
                         <TextView
                             android:id="@+id/profileTextBtn"

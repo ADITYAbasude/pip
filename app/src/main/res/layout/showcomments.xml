@@ -27,7 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                app:srcCompat="@drawable/ic_baseline_account_circle_24" />
+                app:srcCompat="@drawable/usermodel" />
 
         </androidx.cardview.widget.CardView>
     </androidx.cardview.widget.CardView>

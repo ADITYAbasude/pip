@@ -3,6 +3,8 @@
     package="com.example.pip">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
@@ -15,57 +17,57 @@
         <activity
             android:name=".following_follower_AnotherProfile"
             android:exported="true"
-            android:parentActivityName=".twitpage"/>
+            android:parentActivityName=".screens.HomeScreen"/>
         <activity
-            android:name=".Following_Follower_Activity"
+            android:name=".screens.FollowingFollowerTabScreen"
             android:exported="true"
-            android:parentActivityName=".User_profile_visit" />
+            android:parentActivityName=".screens.MyProfileVisitScreen" />
         <activity
-            android:name=".pip_view"
+            android:name=".screens.PostViewScreen"
             android:exported="true"
-            android:parentActivityName=".twitpage" />
+            android:parentActivityName=".screens.HomeScreen" />
         <activity
-            android:name=".aboutapp"
+            android:name=".screens.AboutScreen"
             android:exported="true"
-            android:parentActivityName=".settingsAnsPrivercy" />
+            android:parentActivityName=".screens.SettingsScreen" />
         <activity
-            android:name=".feedback"
+            android:name=".screens.FeedbackScreen"
             android:exported="true"
-            android:parentActivityName=".settingsAnsPrivercy" />
+            android:parentActivityName=".screens.SettingsScreen" />
         <activity
-            android:name=".settingsAnsPrivercy"
+            android:name=".screens.SettingsScreen"
             android:exported="false" />
         <activity
-            android:name=".Visit_Another_profile"
+            android:name=".screens.VisitOtherUserProfileScreen"
             android:exported="false" />
         <activity
-            android:name=".User_profile_visit"
+            android:name=".screens.MyProfileVisitScreen"
             android:exported="true"
-            android:parentActivityName=".twitpage"/>
+            android:parentActivityName=".screens.HomeScreen"/>
         <activity
-            android:name=".pip_splash_screen"
+            android:name=".screens.SplashScreen"
             android:exported="false" />
         <activity
-            android:name=".EditUserProfileActivity"
+            android:name=".screens.EditUserProfileScreen"
             android:exported="true" />
         <activity
-            android:name=".userComment"
+            android:name=".screens.CommentScreen"
             android:exported="false" />
         <activity
-            android:name=".twittingpageUser"
+            android:name=".screens.post.PostScreen"
             android:exported="false" />
         <activity
-            android:name=".twitpage"
+            android:name=".screens.HomeScreen"
             android:exported="true" />
         <activity
-            android:name=".AccountCreate"
+            android:name=".screens.auth.RegisterUserScreen"
             android:exported="true"
-            android:parentActivityName=".account" />
+            android:parentActivityName=".screens.StartScreen" />
         <activity
-            android:name=".loginActivity"
-            android:parentActivityName=".account" />
+            android:name=".screens.auth.LoginUserScreen"
+            android:parentActivityName=".screens.StartScreen" />
         <activity
-            android:name=".account"
+            android:name=".screens.StartScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

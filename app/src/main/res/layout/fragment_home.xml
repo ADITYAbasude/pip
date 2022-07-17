@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".home">
+    tools:context=".screens.HomePostScreen">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -21,7 +21,7 @@
             android:contentDescription="@string/todo"
             android:focusable="true"
             android:src="@android:drawable/ic_input_add"
-            app:backgroundTint="@color/purple_500"
+            app:backgroundTint="@color/main_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
@@ -53,7 +53,7 @@
             android:id="@+id/errorText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="You not following any user."
+            android:text="You not following any userModel."
             android:textColor="#000000"
             android:textSize="20sp"
             android:textStyle="bold"

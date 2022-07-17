@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_ui"
-    tools:context=".User_profile_visit">
+    tools:context=".screens.MyProfileVisitScreen">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -42,7 +42,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/ic_baseline_account_circle_24" />
+                    app:srcCompat="@drawable/usermodel" />
             </androidx.cardview.widget.CardView>
         </androidx.cardview.widget.CardView>
 
