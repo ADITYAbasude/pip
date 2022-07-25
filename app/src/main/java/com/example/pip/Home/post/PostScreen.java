@@ -1,4 +1,4 @@
-package com.example.pip.screens.post;
+package com.example.pip.Home.post;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -179,13 +179,13 @@ public class PostScreen extends AppCompatActivity {
         pickImage.setColorFilter(ContextCompat.getColor(this, R.color.black), PorterDuff.Mode.SRC_ATOP);
         binding.closePostScreen.setImageDrawable(close);
         binding.selectImage.setImageDrawable(pickImage);
-        getSupportActionBar().setTitle(Html.fromHtml("<font color='#000000'>Login your account</font>"));
+        Objects.requireNonNull(getSupportActionBar()).setTitle(Html.fromHtml("<font color='#000000'>Login your account</font>"));
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(this , HomeScreen.class);
+//        Intent intent = new Intent(this , HomeScreen.class);
         overridePendingTransition(R.anim.activity_in  , R.anim.activity_out);
     }
 }

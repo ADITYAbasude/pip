@@ -1,4 +1,4 @@
-package com.example.pip.screens;
+package com.example.pip.user.settings;
 
 import android.content.res.Configuration;
 import android.graphics.PorterDuff;

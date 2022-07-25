@@ -1,6 +1,8 @@
 package com.example.pip.Adapters;
 
 import android.content.Context;
+import android.content.res.Configuration;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,14 +23,10 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.commentV
     ArrayList<CommentModel> commentData;
     Context context;
 
-
-
     public CommentAdapter(Context context, ArrayList<CommentModel> commentData) {
         this.context = context;
         this.commentData = commentData;
     }
-
-
 
     @NonNull
     @Override
@@ -43,6 +41,12 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.commentV
         CommentModel comment = commentData.get(position);
         holder.setUserNameInUserReplySection.setText(comment.UserName);
         holder.setUserPipDataInUserReplySection.setText(comment.userComment);
+
+        int modeFlag = context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        if (modeFlag == Configuration.UI_MODE_NIGHT_YES) {
+            holder.setUserNameInUserReplySection.setTextColor(Color.WHITE);
+            holder.setUserPipDataInUserReplySection.setTextColor(Color.WHITE);
+        }
 
         if (comment.Image_uri != null){
             Glide.with(context).load(comment.Image_uri).into(holder.UserImageInCommentSection);

@@ -1,24 +1,22 @@
-package com.example.pip.screens;
+package com.example.pip.Home.Screens;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pip.Adapters.HomePostAdapter;
-import com.example.pip.R;
 import com.example.pip.Models.UserModel;
-import com.example.pip.screens.post.PostScreen;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.example.pip.databinding.FragmentHomeBinding;
+import com.example.pip.Home.post.PostScreen;
+import com.example.pip.screens.StartScreen;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,22 +24,25 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
+import java.util.Objects;
 
 
-public class HomePostScreen extends Fragment {
-    private FloatingActionButton addTwitBtn;
+public class HomeScreen extends Fragment {
     private HomePostAdapter homePageAdapter;
-    private RecyclerView pipShow;
-    private ArrayList<UserModel> storePipData = new ArrayList<>();
-    private ArrayList<String> followerId = new ArrayList<>();
-    private ProgressBar progessbar;
-    public final DatabaseReference userPipDataRef = FirebaseDatabase.getInstance().getReference("user").child("UserPost").child("UserPipData");
-    public final DatabaseReference userDataRef = FirebaseDatabase.getInstance().getReference("user").child("UserInfo").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+    private final ArrayList<UserModel> storePipData = new ArrayList<>();
+    private final ArrayList<String> followerId = new ArrayList<>();
+    public final DatabaseReference userPipDataRef = FirebaseDatabase.getInstance().getReference("user")
+            .child("UserPost").child("UserPipData");
+    public final DatabaseReference userDataRef = FirebaseDatabase.getInstance().getReference("user")
+            .child("UserInfo").child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid());
     private boolean notifyData = true;
-    private TextView errorText;
 
-    public HomePostScreen() {
+    private FragmentHomeBinding binding;
+
+    public HomeScreen() {
     }
 
 
@@ -51,10 +52,10 @@ public class HomePostScreen extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        binding = FragmentHomeBinding.inflate(inflater , container , false);
+        return binding.getRoot();
     }
 
     @Override
@@ -62,43 +63,36 @@ public class HomePostScreen extends Fragment {
 
         // ----------------------------id decleration ------------------------
 
-        addTwitBtn = view.findViewById(R.id.floatingActionButtonforTwit);
-        pipShow = view.findViewById(R.id.pipShow);
-        progessbar = view.findViewById(R.id.progressbar);
-        errorText = view.findViewById(R.id.errorText);
         if (FirebaseAuth.getInstance().getCurrentUser() == null) {
             Intent intent = new Intent(getContext(), StartScreen.class);
             startActivity(intent);
-            getActivity().finish();
+            requireActivity().finish();
         } else {
             getAllFollowerId();
         }
 
 //        ------------------recyclerView setup ----------------------
-        pipShow.setHasFixedSize(true);
+        binding.pipShow.setHasFixedSize(true);
         homePageAdapter = new HomePostAdapter(getContext(), storePipData);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
-        pipShow.setLayoutManager(layoutManager);
-        pipShow.setAdapter(homePageAdapter);
+        binding.pipShow.setLayoutManager(layoutManager);
+        binding.pipShow.setAdapter(homePageAdapter);
 
 
 //        ----------click on floating btn for twit --------------
 
-        addTwitBtn.setOnClickListener(view1 -> {
+        binding.addYourPost.setOnClickListener(view1 -> {
             Intent userTwitPageOpen = new Intent(getContext(), PostScreen.class);
             startActivity(userTwitPageOpen);
-
         });
-
-
     }
 
 
     private void getAllFollowerId() {
         storePipData.clear();
-        progessbar.setVisibility(View.VISIBLE);
+        binding.progressbar.setVisibility(View.VISIBLE);
         userDataRef.child("Following").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -109,8 +103,8 @@ public class HomePostScreen extends Fragment {
                         followerId.add(ds.getKey());
                     }
                 } else {
-                    errorText.setVisibility(View.VISIBLE);
-                    progessbar.setVisibility(View.GONE);
+                    binding.errorText.setVisibility(View.VISIBLE);
+                    binding.progressbar.setVisibility(View.GONE);
                 }
                 followerId.add(FirebaseAuth.getInstance().getUid());
                 retrieveData();
@@ -130,6 +124,7 @@ public class HomePostScreen extends Fragment {
         storePipData.clear();
         for (int i = 0; i < followerId.size(); i++) {
             userPipDataRef.child(followerId.get(i)).addValueEventListener(new ValueEventListener() {
+                @SuppressLint("NotifyDataSetChanged")
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.exists()) {
@@ -141,8 +136,8 @@ public class HomePostScreen extends Fragment {
                             homePageAdapter.notifyDataSetChanged();
                             notifyData = false;
                         }
-                        progessbar.setVisibility(View.GONE);
-                        errorText.setVisibility(View.GONE);
+                        binding.progressbar.setVisibility(View.GONE);
+                        binding.errorText.setVisibility(View.GONE);
                     }
                 }
 

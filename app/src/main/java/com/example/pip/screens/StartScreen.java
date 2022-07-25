@@ -9,8 +9,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pip.R;
-import com.example.pip.screens.auth.LoginUserScreen;
-import com.example.pip.screens.auth.RegisterUserScreen;
+import com.example.pip.auth.screens.LoginUserScreen;
+import com.example.pip.auth.screens.RegisterUserScreen;
 import com.google.firebase.auth.FirebaseAuth;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;

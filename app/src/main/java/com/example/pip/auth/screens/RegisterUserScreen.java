@@ -1,4 +1,4 @@
-package com.example.pip.screens.auth;
+package com.example.pip.auth.screens;
 
 import android.content.Intent;
 import android.content.res.Configuration;

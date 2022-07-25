@@ -10,5 +10,6 @@
     <color name="borderColor">#DDDDDD</color>
     <color name="red">#B10000</color>
     <color name="gray_light">#ECECEC</color>
-    <color name="status_color">#54000000</color>
+    <color name="status_color">#23000000</color>
+    <color name="dimNight">#292929</color>
 </resources>

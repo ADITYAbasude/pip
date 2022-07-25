@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,69 +7,64 @@
     android:layout_marginLeft="2dp"
     android:layout_marginRight="2dp"
     android:layout_marginBottom="10dp"
-    android:background="@drawable/search_user_detailed_contains"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="1dp"
     app:circularflow_defaultRadius="150dp"
     app:circularflow_radiusInDP="150dp"
     app:layout_constraintCircleRadius="150dp">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView3"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="24dp"
-        app:cardCornerRadius="250sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:padding="5dp">
 
-        <ImageView
-            android:id="@+id/set_User_img"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView3"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:contentDescription="TODO"
-            android:scaleType="centerCrop"
-            app:srcCompat="@drawable/usermodel" />
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="5dp"
+            app:cardCornerRadius="250sp">
 
-    </androidx.cardview.widget.CardView>
+            <ImageView
+                android:id="@+id/set_User_img"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:contentDescription="TODO"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/usermodel" />
 
-    <TextView
-        android:id="@+id/UserPipName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/divider3"
-        app:layout_constraintStart_toEndOf="@+id/cardView3"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_max="wrap" />
+        </androidx.cardview.widget.CardView>
 
-    <Button
-        android:id="@+id/Visit_profile"
-        android:layout_width="wrap_content"
-        android:layout_height="35dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/btn_with_roundborders"
-        android:text="Visit Profile"
-        android:textAllCaps="false"
-        android:textColor="#000000"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="TouchTargetSizeCheck" />
+        <TextView
+            android:id="@+id/UserPipName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:gravity="start|center_horizontal"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:maxEms="15"
+            android:maxLength="15"
+            android:textSize="20sp"
+            android:theme="@style/TextView" />
 
-    <View
-        android:id="@+id/divider3"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="16dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView3" />
+        <Button
+            android:id="@+id/Visit_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_gravity="center|end"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="0"
+            android:background="@drawable/btn_with_roundborders"
+            android:text="Visit Profile"
+            android:textAllCaps="false"
+            android:textColor="#000000"
+            android:textSize="12sp"
+            tools:ignore="TouchTargetSizeCheck" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

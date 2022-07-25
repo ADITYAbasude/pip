@@ -1,4 +1,4 @@
-package com.example.pip.screens.auth;
+package com.example.pip.auth.screens;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -52,6 +52,9 @@ public class LoginUserScreen extends AppCompatActivity {
                 binding.takePasswordForLogin.requestFocus();
             } else if (ust.isEmpty()) {
                 binding.takeEmailForLogin.setError("Fill the passwords");
+                binding.takeEmailForLogin.requestFocus();
+            } else if (!ust.matches("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+")) {
+                binding.takeEmailForLogin.setError("Enter a valid email");
                 binding.takeEmailForLogin.requestFocus();
             } else if (pt.length() <= 7) {
                 binding.takePasswordForLogin.setError("Your password must be 8 (Letters , Numbers , and other) mixing");

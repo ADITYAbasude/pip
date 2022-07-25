@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".screens.SettingsScreen">
+    tools:context=".user.settings.SettingsScreen">
 
     <ScrollView
         android:layout_width="0dp"
@@ -19,6 +19,19 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <ImageButton
+                android:id="@+id/closeFeedBackScreen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="0"
+                android:background="@null"
+                android:minWidth="48dp"
+                android:minHeight="48dp"
+                app:srcCompat="@drawable/round_close"
+                tools:ignore="SpeakableTextPresentCheck" />
+
             <TextView
                 android:id="@+id/feedBack"
                 android:layout_width="match_parent"
@@ -28,27 +41,39 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="15dp"
                 android:layout_weight="1"
-                android:background="@drawable/textui"
                 android:fontFamily="sans-serif-condensed"
                 android:paddingLeft="20dp"
                 android:text="Feedback"
-                android:textColor="#000000"
-                android:textColorHint="#000000"
-                android:textSize="34sp" />
+                android:textSize="34sp"
+                android:theme="@style/TextView" />
+
+            <View
+                android:id="@+id/divider4"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
 
             <TextView
                 android:id="@+id/AboutApp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
                 android:layout_weight="1"
-                android:background="@drawable/textui"
                 android:fontFamily="sans-serif-condensed"
                 android:paddingLeft="20dp"
                 android:text="About App"
-                android:textColor="#000000"
-                android:textSize="34sp" />
+                android:textSize="34sp"
+                android:theme="@style/TextView" />
+
+            <View
+                android:id="@+id/divider5"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_weight="1"
+                android:background="?android:attr/listDivider" />
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

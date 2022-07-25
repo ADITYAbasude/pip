@@ -7,9 +7,7 @@
     android:layout_marginLeft="5dp"
     android:layout_marginTop="10dp"
     android:layout_marginRight="5dp"
-    android:layout_marginBottom="5dp"
-    android:background="@drawable/search_user_detailed_contains"
-    android:elevation="10dp">
+    android:layout_marginBottom="5dp">
 
     <ImageView
         android:id="@+id/delect"
@@ -23,8 +21,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView5"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         app:cardCornerRadius="100dp"
@@ -52,9 +50,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:layout_marginTop="20dp"
-        android:textColor="@color/black"
         android:textSize="15sp"
         android:textStyle="bold"
+        android:theme="@style/TextView"
         app:layout_constraintStart_toEndOf="@+id/cardView5"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_max="100dp" />
@@ -66,7 +64,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:paddingRight="10dp"
-        android:textColor="@color/black"
+        android:theme="@style/TextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/cardView5"
         app:layout_constraintTop_toBottomOf="@+id/userNameInPip2" />
@@ -101,7 +99,6 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
             android:layout_marginEnd="70dp"
             android:orientation="horizontal">
 
@@ -110,16 +107,16 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginRight="10dp"
-                android:layout_weight="1"
+                android:layout_weight="0"
                 app:srcCompat="@drawable/heart" />
 
             <TextView
                 android:id="@+id/heartCount2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0"
                 android:text="0"
-                android:textColor="#000000" />
+                android:theme="@style/TextView" />
         </LinearLayout>
 
         <LinearLayout
@@ -133,16 +130,16 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginRight="10dp"
-                android:layout_weight="1"
+                android:layout_weight="0"
                 app:srcCompat="@drawable/comment" />
 
             <TextView
                 android:id="@+id/commentCount2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0"
                 android:text="0"
-                android:textColor="#000000" />
+                android:theme="@style/TextView" />
         </LinearLayout>
 
         <LinearLayout
@@ -154,7 +151,7 @@
                 android:id="@+id/share2"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:layout_weight="1"
+                android:layout_weight="0"
                 app:srcCompat="@drawable/share" />
 
         </LinearLayout>
@@ -166,8 +163,19 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:textColor="#000000"
         android:textSize="12sp"
+        android:theme="@style/TextView"
         app:layout_constraintEnd_toStartOf="@+id/delect"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/divider6"
+        android:layout_width="381dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 </androidx.constraintlayout.widget.ConstraintLayout>

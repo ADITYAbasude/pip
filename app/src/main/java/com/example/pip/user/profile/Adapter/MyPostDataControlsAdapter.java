@@ -1,9 +1,12 @@
-package com.example.pip.Adapters;
+package com.example.pip.user.profile.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.media.MediaPlayer;
+import android.content.res.Configuration;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,12 +15,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.pip.R;
-import com.example.pip.Models.UserModel;
 import com.example.pip.Models.PostDataImageModel;
+import com.example.pip.Models.UserModel;
+import com.example.pip.R;
 import com.example.pip.screens.CommentScreen;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -27,31 +31,51 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 
 public class MyPostDataControlsAdapter extends RecyclerView.Adapter<MyPostDataControlsAdapter.MyAdapter> {
-    ArrayList<UserModel> store_pip_data;
-    Context context;
-    boolean like_dislike = false;
-    public final DatabaseReference userPipDataRef = FirebaseDatabase.getInstance().getReference("user").child("UserPost").child("UserPipData")
-            .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-    MediaPlayer mp;
-
+    private final ArrayList<UserModel> store_pip_data;
+    private final Context context;
+    private boolean like_dislike = false;
+    public final DatabaseReference userPipDataRef = FirebaseDatabase.getInstance().getReference("user").child("UserPost")
+            .child("UserPipData").child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid());
 
     public final DatabaseReference userDataRef = FirebaseDatabase.getInstance().getReference("user").child("UserInfo").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
-    String u_id = FirebaseAuth.getInstance().getUid();
+    private final String u_id = FirebaseAuth.getInstance().getUid();
+
 
     public MyPostDataControlsAdapter(Context context, ArrayList<UserModel> store_user_Model_pip) {
         this.context = context;
         this.store_pip_data = store_user_Model_pip;
     }
 
+    public static class MyAdapter extends RecyclerView.ViewHolder {
+
+        protected TextView userPipName2, pipDateShow2, heartCount2, CommentCount2, pipDateAndTime;
+        protected ImageView heart2, comment2, share2, User_image, delete, CurrentUserPipDataImage;
+
+
+        public MyAdapter(@NonNull View itemView) {
+            super(itemView);
+            userPipName2 = itemView.findViewById(R.id.userNameInPip2);
+            pipDateShow2 = itemView.findViewById(R.id.pipPostDate2);
+            heart2 = itemView.findViewById(R.id.heart2);
+            comment2 = itemView.findViewById(R.id.comment2);
+            heartCount2 = itemView.findViewById(R.id.heartCount2);
+            CommentCount2 = itemView.findViewById(R.id.commentCount2);
+            share2 = itemView.findViewById(R.id.share2);
+            User_image = itemView.findViewById(R.id.userProfileImg2);
+            delete = itemView.findViewById(R.id.delect);
+            pipDateAndTime = itemView.findViewById(R.id.pipDateAndTime);
+            CurrentUserPipDataImage = itemView.findViewById(R.id.CurrentUserPipDataImage);
+        }
+    }
 
     @NonNull
     @Override
     public MyAdapter onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         View v = LayoutInflater.from(context).inflate(R.layout.profile_user_pip_data_structure, parent, false);
         return new MyAdapter(v);
     }
@@ -64,7 +88,6 @@ public class MyPostDataControlsAdapter extends RecyclerView.Adapter<MyPostDataCo
         holder.pipDateShow2.setText(userModel.pipPostData);
         holder.pipDateAndTime.setText(userModel.date);
 
-
         likeStatus(userModel, holder.heart2, holder.heartCount2);
 
 
@@ -74,6 +97,7 @@ public class MyPostDataControlsAdapter extends RecyclerView.Adapter<MyPostDataCo
                 if (snapshot.exists()) {
                     holder.CurrentUserPipDataImage.setVisibility(View.VISIBLE);
                     PostDataImageModel ImageModel = snapshot.getValue(PostDataImageModel.class);
+                    assert ImageModel != null;
                     Glide.with(context).load(Uri.parse(ImageModel.pipImageData)).into(holder.CurrentUserPipDataImage);
                 } else {
                     holder.CurrentUserPipDataImage.setVisibility(View.GONE);
@@ -82,7 +106,6 @@ public class MyPostDataControlsAdapter extends RecyclerView.Adapter<MyPostDataCo
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
 
@@ -92,6 +115,7 @@ public class MyPostDataControlsAdapter extends RecyclerView.Adapter<MyPostDataCo
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     UserModel userModel1 = snapshot.getValue(UserModel.class);
+                    assert userModel1 != null;
                     Glide.with(context).load(Uri.parse(userModel1.User_Profile_Image_Uri)).into(holder.User_image);
                 } else {
                     holder.User_image.setImageResource(R.drawable.usermodel);
@@ -105,7 +129,7 @@ public class MyPostDataControlsAdapter extends RecyclerView.Adapter<MyPostDataCo
         });
 
 
-        delect_pip_Data(holder.delect, userModel);
+        delete_pip_Data(holder.delete, userModel);
         pip_like_data_store(userModel, holder.heart2);
         commentCount(holder.CommentCount2, userModel);
 
@@ -114,6 +138,7 @@ public class MyPostDataControlsAdapter extends RecyclerView.Adapter<MyPostDataCo
             moveCommentPage.putExtra("userName", holder.userPipName2.getText().toString());
             moveCommentPage.putExtra("pipData", holder.pipDateShow2.getText().toString());
             moveCommentPage.putExtra("pip_id", userModel.pip_id);
+
             context.startActivity(moveCommentPage);
 
         });
@@ -127,6 +152,7 @@ public class MyPostDataControlsAdapter extends RecyclerView.Adapter<MyPostDataCo
             context.startActivity(shareIntent);
         });
 
+        nightMode(holder);
 
     }
 
@@ -145,9 +171,10 @@ public class MyPostDataControlsAdapter extends RecyclerView.Adapter<MyPostDataCo
         });
     }
 
-    private void delect_pip_Data(ImageView delect, UserModel userModel) {
-        delect.setOnClickListener(v ->
+    private void delete_pip_Data(ImageView delete, UserModel userModel) {
+        delete.setOnClickListener(v ->
                 userPipDataRef.child(userModel.pip_id).addValueEventListener(new ValueEventListener() {
+                    @SuppressLint("NotifyDataSetChanged")
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         snapshot.getRef().setValue(null);
@@ -163,26 +190,22 @@ public class MyPostDataControlsAdapter extends RecyclerView.Adapter<MyPostDataCo
 
     }
 
-    private void pip_like_data_store(UserModel userModel, ImageView hert) {
-        hert.setOnClickListener(v -> {
+    private void pip_like_data_store(UserModel userModel, ImageView heart) {
+        heart.setOnClickListener(v -> {
             like_dislike = true;
             userPipDataRef.child(userModel.pip_id).child("Likes").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (like_dislike) {
+                        assert u_id != null;
                         if (snapshot.hasChild(u_id)) {
                             snapshot.getRef().child(u_id).setValue(null);
-                            hert.setImageResource(R.drawable.heart);
+                            nightMode(heart);
                             like_dislike = false;
                         } else {
-                            hert.setImageResource(R.drawable.heartred);
-                            mp = MediaPlayer.create(context, R.raw.heart_click_sound);
-                            mp.setOnPreparedListener(mp -> {
-                                mp.start();
-                            });
+                            heart.setImageResource(R.drawable.heartred);
                             snapshot.getRef().child(u_id).setValue(true);
                             like_dislike = false;
-
                         }
                     }
                 }
@@ -204,12 +227,13 @@ public class MyPostDataControlsAdapter extends RecyclerView.Adapter<MyPostDataCo
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
+                assert u_id != null;
                 if (snapshot.hasChild(u_id)) {
                     heart.setImageResource(R.drawable.heartred);
                     heartCount.setText(Integer.toString((int) snapshot.getChildrenCount()));
-                    ;
+
                 } else {
-                    heart.setImageResource(R.drawable.heart);
+                    nightMode(heart);
                     heartCount.setText(Integer.toString((int) snapshot.getChildrenCount()));
                 }
 
@@ -224,32 +248,49 @@ public class MyPostDataControlsAdapter extends RecyclerView.Adapter<MyPostDataCo
 
     }
 
-
     @Override
     public int getItemCount() {
         return store_pip_data.size();
     }
 
+    void nightMode(MyAdapter holder) {
+        int modeFlag = context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        if (modeFlag == Configuration.UI_MODE_NIGHT_YES) {
+            final Drawable delete = ContextCompat.getDrawable(context, R.drawable.delect_icon);
+            final Drawable comment = ContextCompat.getDrawable(context, R.drawable.comment);
+            final Drawable share = ContextCompat.getDrawable(context, R.drawable.share);
 
-    public class MyAdapter extends RecyclerView.ViewHolder {
+            assert delete != null;
+            assert comment != null;
+            assert share != null;
 
-        protected TextView userPipName2, pipDateShow2, heartCount2, CommentCount2, pipDateAndTime;
-        protected ImageView heart2, comment2, share2, User_image, delect, CurrentUserPipDataImage;
+            delete.setColorFilter(ContextCompat.getColor(context, R.color.white), PorterDuff.Mode.SRC_ATOP);
+            comment.setColorFilter(ContextCompat.getColor(context, R.color.white), PorterDuff.Mode.SRC_ATOP);
+            share.setColorFilter(ContextCompat.getColor(context, R.color.white), PorterDuff.Mode.SRC_ATOP);
 
+            holder.delete.setImageDrawable(delete);
+            holder.comment2.setImageDrawable(comment);
+            holder.share2.setImageDrawable(share);
+            holder.CommentCount2.setTextColor(Color.WHITE);
+            holder.heartCount2.setTextColor(Color.WHITE);
+            holder.pipDateShow2.setTextColor(Color.WHITE);
+            holder.userPipName2.setTextColor(Color.WHITE);
+            holder.pipDateAndTime.setTextColor(Color.WHITE);
 
-        public MyAdapter(@NonNull View itemView) {
-            super(itemView);
-            userPipName2 = itemView.findViewById(R.id.userNameInPip2);
-            pipDateShow2 = itemView.findViewById(R.id.pipPostDate2);
-            heart2 = itemView.findViewById(R.id.heart2);
-            comment2 = itemView.findViewById(R.id.comment2);
-            heartCount2 = itemView.findViewById(R.id.heartCount2);
-            CommentCount2 = itemView.findViewById(R.id.commentCount2);
-            share2 = itemView.findViewById(R.id.share2);
-            User_image = itemView.findViewById(R.id.userProfileImg2);
-            delect = itemView.findViewById(R.id.delect);
-            pipDateAndTime = itemView.findViewById(R.id.pipDateAndTime);
-            CurrentUserPipDataImage = itemView.findViewById(R.id.CurrentUserPipDataImage);
+            holder.heart2.setImageResource(R.drawable.white_heart);
+        } else {
+            holder.heart2.setImageResource(R.drawable.heart);
         }
     }
+
+    void nightMode(ImageView heart2) {
+        int modeFlag = context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        if (modeFlag == Configuration.UI_MODE_NIGHT_YES) {
+            heart2.setImageResource(R.drawable.white_heart);
+        } else {
+            heart2.setImageResource(R.drawable.heart);
+        }
+    }
+
+
 }

@@ -21,50 +21,54 @@
         <activity
             android:name=".screens.FollowingFollowerTabScreen"
             android:exported="true"
-            android:parentActivityName=".screens.MyProfileVisitScreen" />
+            android:parentActivityName=".user.profile.MyProfileVisitScreen" />
         <activity
             android:name=".screens.PostViewScreen"
             android:exported="true"
             android:parentActivityName=".screens.HomeScreen" />
         <activity
-            android:name=".screens.AboutScreen"
+            android:name=".user.settings.AboutScreen"
             android:exported="true"
-            android:parentActivityName=".screens.SettingsScreen" />
+            android:parentActivityName=".user.settings.SettingsScreen" />
         <activity
-            android:name=".screens.FeedbackScreen"
+            android:name=".user.settings.FeedbackScreen"
             android:exported="true"
-            android:parentActivityName=".screens.SettingsScreen" />
+            android:parentActivityName=".user.settings.SettingsScreen" />
         <activity
-            android:name=".screens.SettingsScreen"
+            android:name=".user.settings.SettingsScreen"
             android:exported="false" />
         <activity
             android:name=".screens.VisitOtherUserProfileScreen"
             android:exported="false" />
         <activity
-            android:name=".screens.MyProfileVisitScreen"
+            android:name=".user.profile.MyProfileVisitScreen"
             android:exported="true"
+            android:theme="@style/customThemeForScreen"
             android:parentActivityName=".screens.HomeScreen"/>
         <activity
             android:name=".screens.SplashScreen"
             android:exported="false" />
         <activity
-            android:name=".screens.EditUserProfileScreen"
+            android:name=".user.edit.EditUserProfileScreen"
+            android:theme="@style/customThemeForScreen"
             android:exported="true" />
         <activity
             android:name=".screens.CommentScreen"
+            android:theme="@style/customThemeForScreen"
             android:exported="false" />
         <activity
-            android:name=".screens.post.PostScreen"
+            android:name=".Home.post.PostScreen"
             android:exported="false" />
         <activity
             android:name=".screens.HomeScreen"
+            android:theme="@style/customThemeForScreen"
             android:exported="true" />
         <activity
-            android:name=".screens.auth.RegisterUserScreen"
+            android:name=".auth.screens.RegisterUserScreen"
             android:exported="true"
             android:parentActivityName=".screens.StartScreen" />
         <activity
-            android:name=".screens.auth.LoginUserScreen"
+            android:name=".auth.screens.LoginUserScreen"
             android:parentActivityName=".screens.StartScreen" />
         <activity
             android:name=".screens.StartScreen"
